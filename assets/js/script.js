@@ -741,24 +741,8 @@ $(function () {
         $('.tooltip-name').removeClass('active');
     });
 });
-function refreshTableState() {
-    if (!table) return;
-
-    table.draw(false);
-    applyFilter();
-    updateFilterStatus();
-}
-
-// Back Button
-$(window).on('pageshow', function (event) {
-    if (event.originalEvent.persisted) {
-        refreshTableState();
-    }
-});
-
-// Tab wieder aktiv
 document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'visible') {
-        refreshTableState();
+        location.reload();
     }
 });
