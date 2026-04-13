@@ -30,17 +30,6 @@ $(function () {
 
         resetAllFilters();
         $('input[name="mode"][value="alle"]').prop('checked', true);
-
-        createBerufsgruppeDropdown();
-        createDisziplinDropdown("Alle");
-        createLandDropdown();
-        createEmigrationslandDropdown();
-
-        updateLandOptions(daten);
-        updateEmigrationslandDropdown(daten);
-
-        applyFilter();
-        updateFilterStatus();
     }
 
     /* DATATABLE INITIALISIERUNG */
