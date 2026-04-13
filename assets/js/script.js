@@ -1,4 +1,7 @@
 let table;
+let applyFilter;
+let updateFilterStatus;
+
 $(function () {
 
     function showLoading() {
