@@ -1,4 +1,4 @@
-
+let table;
 $(function () {
 
     function showLoading() {
@@ -29,7 +29,7 @@ $(function () {
 
     /* DATATABLE INITIALISIERUNG */
 
-    let table = $('#demo').DataTable({
+        table = $('#demo').DataTable({
         data: daten,
         pageLength: 10,
         order: [[0, 'asc']],
@@ -738,8 +738,24 @@ $(function () {
         $('.tooltip-name').removeClass('active');
     });
 });
+function refreshTableState() {
+    if (!table) return;
+
+    table.draw(false);
+    applyFilter();
+    updateFilterStatus();
+}
+
+// Back Button
 $(window).on('pageshow', function (event) {
     if (event.originalEvent.persisted) {
-        location.reload();
+        refreshTableState();
+    }
+});
+
+// Tab wieder aktiv
+document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') {
+        refreshTableState();
     }
 });
