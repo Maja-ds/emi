@@ -737,9 +737,4 @@ $(function () {
     $(document).on('click', function () {
         $('.tooltip-name').removeClass('active');
     });
-window.addEventListener("pageshow", function (event) {
-    if (!event.persisted) {
-        location.reload();
-    }
-});
 });
