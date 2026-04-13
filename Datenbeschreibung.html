@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenbeschreibung</title>
+    <link rel="stylesheet" href="assets/css/styles_dat.css">
+    <script src="assets/js/toc-active.js" defer></script>
+    <script src="assets/js/popup.js" defer></script>
+</head>
+<body>
+
+    <!-- Inhaltsverzeichnis -->
+    <h1 class="mobile">Datenbankhandbuch</h1>
+    <div class="layout">
+        <nav id="toc">
+            <ul>
+                <li><a href="#punkt1">Datenbank</a></li>
+                <li><a href="#punkt2">Datengrundlage</a></li>
+                <li><a href="#punkt3">Umgang mit heterogenen Daten</a></li>
+                <li><a href="#punkt4">Datenbeschreibung</a></li>
+                <li><a href="#punkt5">Kerngruppe</a></li>
+                <li><a href="#punkt6">Zeitbezug der Berufsangaben</a></li>
+                <li><a href="#punkt7">Fehlende Werte</a></li>
+                <li><a href="#punkt8">Kategorisierung der Berufsgruppen</a></li>
+                <li><a href="#punkt9">Kategorisierung der Fachbereiche</a></li>
+                <li><a href="#punkt10">Kategorisierung der Konfessionen</a></li>
+                <li><a href="#punkt11">Geographische Namen</a></li>
+                <li>
+                    <a href="#punkt12">Datenfilterung</a>
+                    <ul>
+                        <li><a href="#punkt13">Filterungspanel</a></li>
+                        <li><a href="#punkt14">Spaltenfilter</a></li>
+                    </ul>
+                </li>
+                <li><a href="#punkt15">Sortierung</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <h1 class="desktop">Datenbankhandbuch</h1>
+            <p>
+                Das Datenbankhandbuch umfasst mehrere kompakte Beiträge,
+                die detaillierte Informationen zur Datenbank,
+                zu den enthaltenen Daten, deren Besonderheiten sowie
+                zur Nutzung der Filter bereitstellen. Die Beiträge sind so konzipiert,
+                dass sie flexibel genutzt werden können:
+                Sie können nacheinander gelesen, einzeln ausgewählt
+                oder in beliebiger Reihenfolge aufgerufen werden.
+                Auf diese Weise ermöglicht das Handbuch sowohl ein
+                systematisches Kennenlernen der Datenbank
+                als auch ein schnelles Nachschlagen spezifischer Informationen.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+            <!-- Inhaltspunkt 1 -->
+            <h2 id="punkt1">Datenbank</h2>
+            <p class="top">
+                Die Datenbank ist tabellarisch aufgebaut und wird den Nutzern vollständig
+                als Tabelle mit allen Einträgen bereitgestellt.
+                Jede Zeile enthält biographische oder emigrationsbezogene Angaben zu Personen,
+                die infolge der nationalsozialistischen Machtübernahme und der Ausweitung
+                des „Dritten Reichs“ aus den deutschsprachigen Ländern emigrierten.
+                Diese Angaben sind in den entsprechenden Spalten <b>Name</b>, <b>Beruf</b>, <b>Geboren</b>,
+                <b>Gestorben</b>, <b>Konfession</b>, <b>Ausreiseort</b> und <b>Emigrationsweg</b> gespeichert.
+                Durch einen Klick auf den jeweiligen Namen können kurze Emigrationsbiografien
+                der Personen geöffnet werden.<br />
+                Die Datenbank wird fortlaufend erweitert und umfasst derzeit
+                Angaben zu <span class="number">8094</span> Personen. Mehr Informationen zum Ursprung der
+                enthaltenen Daten finden Sie im Abschnitt 
+                <a href="#punkt2" class="interner-link">Datengrundlage</a>.<br />
+                Für eine effiziente Recherche in den komplexen
+                Emigrationsdaten stehen verschiedene Such- und Filtermöglichkeiten zur
+                Verfügung. Oberhalb der Tabelle befindet sich ein Filterpanel mit
+                zentralen Suchoptionen. Zusätzlich können direkt in den Spaltenköpfen
+                Spaltenfilter verwendet werden, um gezielt nach bestimmten
+                Angaben zu suchen. Über die Pfeile neben den Spaltennamen
+                lassen sich die Einträge in einigen Spalten zudem sortieren.
+                Weitere Details hierzu finden Sie in Abschnitten
+                <a href="#punkt12" class="interner-link">Datenfilterung</a> und
+                <a href="#punkt15" class="interner-link">Sortierung</a>.
+
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <!-- Inhaltspunkt 2 -->
+
+            <h2 id="punkt2">Datengrundlage</h2>
+            <p>
+                Die Datengrundlage der Personendatenbank bilden die Einträge aus
+                dem <i>Biographischen Handbuch der deutschsprachigen Emigration nach 1933</i>.
+                Diese wurden von der ehemaligen Studentin <i>Stephanie Bujak</i>
+                (M.A. Digital Humanities) aus der Online-Version des Handbuchs
+                mithilfe von Python-Skripten extrahiert und für die weitere
+                Verarbeitung aufbereitet.
+                Das Handbuch, erstmals 1980/83 von <i>Werner Röder</i>
+                und <i>Herbert Strauss</i> herausgegeben, enthält Einträge zu Personen aus den
+                Bereichen Politik, Kunst, Wirtschaft, Wissenschaft,
+                öffentlichem Leben und Literatur, die im Zuge der Machtübernahme
+                der Nationalsozialisten und der Ausweitung des „Dritten Reichs“ die
+                deutschsprachigen Länder verließen. Die Herausgeber beschreiben diese
+                Personen als „mehr oder weniger prominent“, betonen jedoch zugleich,
+                dass für die Aufnahme in das Lexikon nicht in erster Linie Leistungen
+                oder gesellschaftliche Stellung ausschlaggebend waren. Vielmehr spielte
+                eine „gemeinsame historische Betroffenheit“, nämlich die erzwungene
+                Auswanderung, eine zentrale Rolle. Daher finden sich im
+                Handbuch neben weltbekannten Persönlichkeiten wie <i>Albert Einstein</i>
+                oder <i>Erich Maria Remarque</i> auch zahlreiche Personen,
+                die sowohl damals als auch heute einer breiteren Öffentlichkeit
+                kaum bekannt waren bzw. sind.<br />
+                Das Lexikon entstand im Rahmen einer Kooperation zweier Institutionen.
+                Das <i>Institut für Zeitgeschichte</i> in München erstellte die
+                deutschsprachigen Einträge zu Personen aus Politik,
+                Wirtschaft und öffentlichem Leben. Die <i>Research Foundation for Jewish Immigration</i>
+                in New York bearbeitete
+                hingegen die Einträge zu Personen aus Kunst, Literatur und Wissenschaft,
+                die in englischer Sprache verfasst wurden.<br />
+                Im Rahmen der Seminare zur Emigration und zum Exil
+                von Wissenschaftlern und Ingenieuren, organisiert von
+                <i>Prof. Dr. Klaus Hentschel</i> von der Abteilung 
+                <i>Geschichte der Naturwissenschaft und Technik</i>, 
+                werden die
+                bestehenden Einträge um neue Informationen ergänzt
+                und zusätzliche Einträge aufgenommen.
+                Diese neuen Einträge werden ausschließlich auf Deutsch verfasst.
+
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt3">Umgang mit heterogenen Daten</h2>
+            <p>
+                Die Einträge in der Datenbank entstanden in unterschiedlichen
+                Institutionen und wurden sowohl auf Englisch als auch auf
+                Deutsch verfasst (mehr dazu im Abschnitt
+                <a href="#punkt2" class="interner-link">Datengrundlage</a>).
+                Neben den sprachlichen Unterschieden enthalten die Einträge
+                nicht einheitliche Bezeichnungen, Abkürzungen und Akronyme,
+                viele Einträge weisen zudem einen sehr unterschiedlichen
+                Detailierungsgrad auf. Diese Heterogenität erschwert
+                einerseits die systematische Auswertung,
+                Vergleichbarkeit und strukturierte Filterung der Daten.
+                Andererseits ermöglicht sie eine differenzierte,
+                kontextbezogene Beschreibung der Personen,
+                sofern entsprechende Informationen vorlagen.<br />
+                Um die Authentizität der Daten zu bewahren
+                und Informationsverluste durch Vereinheitlichung
+                zu vermeiden, wurden die personenbezogenen
+                Angaben weitgehend unverändert übernommen.
+                Lediglich geographische Angaben in den
+                emigrationsbezogenen Daten wurden
+                ins Deutsche übersetzt und behutsam standardisiert,
+                um die Durchsuchbarkeit der Datenbank zu verbessern.
+                Um die gezielte Analyse der nicht standardisierten
+                Daten dennoch zu ermöglichen, wurden zahlreiche
+                Filterfunktionen implementiert. Weitere Informationen
+                hierzu finden Sie im Abschnitt <a href="#punkt12" class="interner-link">Datenfilterung</a>.
+                Mehr über die Besonderheiten der Daten erfahren
+                Sie im Abschnitt <a href="#punkt4" class="interner-link">Datenbeschreibung</a>.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt4">Datenbeschreibung</h2>
+            <p>
+                Die Personendatenbank ist tabellarisch aufgebaut
+                und umfasst acht Spalten. Da die Einträge
+                meist nicht standardisiert sind, weist jede
+                Spalte besondere Strukturen und Eigenheiten auf,
+                deren Kenntnis die effiziente Nutzung der Datenbank erleichtert.<br /><br />
+                <b>Name</b>: enthält neben den eigentlichen Namen oft Pseudonyme,
+                Titel oder ursprüngliche Namen. Beim Anklicken
+                auf den Namen erscheint eine kurze Emigrationsbiografie
+                der Person. Die Namen der in die Datenbank neu eingefügten
+                Personen sind <i>kursiv</i> markiert.<br /><br />
+                <b>Beruf</b>: die Spalte enthält eine
+                oder mehrere Berufsbezeichnungen pro Person,
+                manchmal auch akademischer Titel in Deutsch
+                und Englisch. Die Angaben variieren stark
+                in der Detaillierung, z. B. „Arzt“ vs. „Zahnchirurg“
+                oder „physician“ vs. „neurologist“.<br /><br />
+                <b>Geboren</b>: die Spalte enthält Geburtsdatum und -ort,
+                teils auf Deutsch, teils auf Englisch. Angaben
+                zu Land oder Region sind häufig abgekürzt wie
+                z. B.  „Ger.“, „Aus.“, „Pol.“ oder fehlen.<br /><br />
+                <b>Gestorben</b>: die Spalte enthält Sterbedatum
+                und -ort, teils auf Deutsch, teils auf Englisch.
+                In einzelnen Fällen wird zudem die Todesursache
+                angegeben, etwa bei ungewöhnlichen
+                Umständen wie Hinrichtung oder Unfall.<br />
+                Die Spalte weist viele fehlende Werte auf, da viele
+                Emigranten zum Zeitpunkt der Verfassung der Einträge
+                (mehr dazu im Abschnitt
+                <a href="#punkt2" class="interner-link">Datengrundlage</a>)
+                noch lebten. Die Spalte wird laufend ergänzt,
+                jedoch in der Regel nur um Sterbejahre.
+                Ergänzte Jahre sind <i>kursiv</i> markiert.<br /><br />
+                <b>Konfession</b>: die Spalte enthält eine oder
+                mehrere Konfessionen pro Person, teils
+                mit Zusatzinformationen zu Konfessionswechseln
+                oder familiärem Hintergrund. Viele Werte in der Spalte fehlen.
+                Mehr über fehlende Werte in Datenbank erfahren Sie
+                <a href="#punkt7" class="interner-link">hier</a>.<br /><br />
+                <b>Ausreiseort</b>: Die Spalte gibt an,
+                wo sich die Person unmittelbar
+                vor der ersten Emigration nach der Machtübernahme
+                der Nationalsozialisten aufhielt.
+                Personen, die zu diesem Zeitpunkt dauerhaft
+                im Ausland lebten, sind ebenfalls erfasst,
+                sodass die Spalte nicht ausschließlich deutschsprachige Länder umfasst.<br />
+                Die Angaben wurden standardisiert und liegen einheitlich
+                in deutscher Sprache vor. In der Spalte wird entweder
+                das Ausreiseland oder, sofern bekannt, die Stadt
+                bzw. Region zusammen mit dem Land angegeben.
+                Weitere Informationen zur Standardisierung
+                der geografischen Namen in der Datenbank finden Sie
+                <a href="#punkt11" class="interner-link">hier</a>.<br /><br />
+                <b>Emigrationsweg</b>: Diese Spalte enthält
+                standardisierte Informationen zu Ausreisejahren,
+                Ausreiseländern und ggf. Städten. Bei manchen
+                Personen ist nur eine einzelne Emigration
+                vermerkt, häufig erfolgten jedoch mehrere Stationen.
+                Der Emigrationsweg umfasst dabei auch Remigrationen,
+                sofern diese bis zum Ende der 1970er stattfanden.<br /><br />
+                <b>Emigrationsbiografie</b>: Wird nicht direkt angezeigt,
+                kann jedoch per Klick auf den Namen aufgerufen
+                werden. Aus technischen Gründen sind die
+                Biographien teilweise nicht vollständig aus
+                der Datengrundlage (mehr zu Datengrundlage
+                <a href="#punkt2" class="interner-link">hier</a>) übernommen,
+                enthalten jedoch häufig zusätzliche weiterführende Informationen.
+
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt5">Kerngruppe</h2>
+            <p>
+                Die Datenbank enthält Informationen zu Vertretern
+                unterschiedlicher Berufsgruppen
+                (mehr dazu im Abschnitt
+                <a href="#punkt8" class="interner-link">Kategorisierung der Berufsgruppen</a>).
+                Als <b>Kerngruppe</b> werden die Vertreter der Berufsgruppen <b>Geisteswissenschaften</b>
+                und <b>Exakten Wissenschaften</b> (einschließlich <b>Ingenieure</b> und <b>Techniker</b>)
+                bezeichnet. Diese Gruppe wird bei der
+                Datenpflege priorisiert behandelt:
+                fehlende Angaben werden vorrangig ergänzt,
+                und neue Einträge werden zuerst hier aufgenommen.
+                Momentan sind in der Kerngruppe <span class="number">2174</span>
+                Personen vorhanden.<br />
+                Möchte ein Nutzer ausschließlich diese Gruppe erkunden,
+                kann er dies über den entsprechenden Button
+                im Filterpanel auswählen. In diesem Modus steht zusätzliche
+                Filtermöglichkeit zur Verfügung, gezielt nach
+                Fachbereichen innerhalb der Berufsgruppen zu filtern.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt6">Zeitbezug der Berufsangaben</h2>
+            <p>
+                Die Datenbank enthält unter anderem Angaben
+                zu den Berufen der Personen, in manchen
+                Fällen auch zu akademischen Titeln.
+                Diese Angaben beziehen sich jedoch
+                nicht auf den Zeitpunkt der Emigration,
+                sondern auf den gesamten Lebens- und
+                Berufsweg der Personen. Viele der erfassten
+                Personen emigrierten bereits als Kinder oder Jugendliche
+                und absolvierten ihre Ausbildung oder ihr Studium erst im Ausland.<br />
+                Das untenstehende Diagramm zeigt die Verteilung
+                des Ausreisealters sowohl für alle in der Datenbank
+                enthaltenen Personen als auch für die <b>Kerngruppe</b>
+                (mehr über <b>Kerngruppe</b>
+                <a href="#punkt5" class="interner-link">hier</a>).
+                Wenn beispielsweise nur erwachsene Emigrantinnen
+                und Emigranten betrachtet werden sollen,
+                empfiehlt es sich, die Daten entsprechend zu filtern.
+                Dies kann etwa durch eine Einschränkung der Geburtsjahre erfolgen.
+
+                <img src="assets/images/Ausreisealter.svg" alt="Histogramm Ausreisealter" class="fullwidth">
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt7">Fehlende Werte</h2>
+            <p>
+                Einige Spalten der tabellarischen Datenbank
+                enthalten viele fehlende Werte.
+                Das Diagramm unten zeigt deren Anteil
+                für die gesamte Datenbank und für die
+                <b>Kerngruppe</b> (mehr zu <b>Kerngruppe</b>
+                <a href="#punkt5" class="interner-link">hier</a>).
+
+                <img src="assets/images/Fehlende_Werte.svg" alt="Fehlende Werte" class="fullwidth">
+
+                Die prozentualen Werte beziehen sich jeweils
+                auf die Gruppengröße. Gezeigt werden nur Spalten,
+                bei denen die absolute Anzahl fehlender Werte
+                über hundert liegt.  Spalte <b>Gestorben</b> enthält viele
+                fehlende Werte, da viele Emigrantinnen und
+                Emigranten zum Zeitpunkt der Eintragserstellung
+                noch lebten. Sie wird laufend aktualisiert,
+                besonders in der <b>Kerngruppe</b>. Viele fehlende Werte
+                in der Spalte <b>Ausreiseort</b> ergeben sich daraus,
+                dass die ursprünglichen Daten
+                (mehr dazu im Abschnitt
+                <a href="#punkt2" class="interner-link">Datengrundlage</a>)
+                diese Angaben
+                oft nicht enthielten und erst ermittelt werden
+                mussten. Auch diese Spalte wird fortlaufend ergänzt.<br />
+                Die fehlenden Werte in der Spalte <b>Konfession</b> sind vermutlich
+                darauf zurückzuführen, dass viele Emigrantinnen
+                und Emigranten aus dem „Dritten Reich“ ihre
+                Konfession nicht unbedingt preisgeben wollten.
+                Diese Spalte wurde noch nicht ergänzt.<br />
+                Fehlende Werte sind in der Datenbank mit „k.A.“ gekennzeichnet 
+                und können damit über den Spaltenfilter
+                (mehr über Spaltenfilter <a href="#punkt14" class="interner-link">hier</a>) gefunden werden.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt8">Kategorisierung der Berufsgruppen</h2>
+            <p>
+                Für bessere Durchsuchbarkeit der Daten wurden
+                die Personen in dreizehn Berufsgruppen eingeteilt.
+                Einige Personen wurden mehreren Gruppen zugeordnet,
+                wenn ihre Berufe unterschiedlich waren oder mehreren
+                Kategorien zugeordnet werden können.
+                So erscheinen Ingenieure sowohl
+                in Berufsgruppe <b>Technik</b> als auch
+                in Berufsgruppe <b>Exakte Wissenschaften</b>,
+                Kunsthändler sowohl in <b>Wirtschaft</b> als
+                auch in <b>Kunst</b>. Im Folgenden werden Berufsgruppen
+                aufgelistet. Beim Klick auf die jeweilige Berufsgruppe
+                werden nähere Informationen zur Zuordnung der Berufe angezeigt.
+            <p>
+                <div id="spaltenWrapper">
+                    <div id="containerLinks">
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Kunst
+                            <div class="popup">
+                                <b>Kunst</b><br /><b><span class="number">1707</span> Personen</b><br />
+                                Künstler aus unterschiedlichen
+                                Bereichen wie bildende Kunst, darstellende Kunst,
+                                Musik und Literatur
+                                wie z. B. Maler, Schriftsteller,
+                                Tänzer, Klavierspieler sowie Kunsthändler,
+                                Kunstsammler, Kunstlehrer und Kunstverwalter
+                                aller Art wie z. B.
+                                Musikproduzenten oder Museumkuratoren
+                            </div>
+                        </button>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Politik
+                            <div class="popup">
+                                <b>Politik</b><br />
+                                <b><span class="number">1460</span> Personen</b><br />
+                                Politiker, Parteifunktionäre
+                                und Aktivisten aller Art
+                            </div>
+                        </button>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Exakte Wissenschaften
+                            <div class="popup">
+                                <b>Exakte Wissenschaften</b><br />
+                                <b><span class="number">1281</span> Personen</b><br />
+                                Naturwissenschaftler aller Art sowie
+                                Mathematiker, Ingenieure und Techniker
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Medien
+                            <div class="popup">
+                                <b>Medien</b><br /><b><span class="number">1001</span> Personen</b><br />
+                                Journalisten, Publizisten, Verleger
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Geisteswissenschaften
+                            <div class="popup">
+                                <b>Geisteswissenschaften</b><br />
+                                <b><span class="number">897</span> Personen</b><br />
+                                Spezialisten unterschiedlicher
+                                Fachrichtungen wie Geschichte,
+                                Philosophie, Sprachwissenschaften,
+                                Kunstwissenschaften
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Sozialwissenschaften
+                            <div class="popup">
+                                <b>Sozialwissenschaften</b><br />
+                                <b><span class="number">866</span> Personen</b><br />
+                                Sozial-, Politik-, Wirtschafts-
+                                und Rechtswissenschaftler einschließlich Juristen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Medizin
+                            <div class="popup">
+                                <b>Medizin</b><br />
+                                <b><span class="number">709</span> Personen</b><br />
+                                sowohl Ärzte als auch Medizinwissenschaftler,
+                                die sich mit körperlichen und geistigen
+                                Krankheiten beschäftigen
+                            </div>
+                        </button>
+
+
+                    </div>
+
+                    <!-- Rechte Spalte -->
+                    <div id="containerRechts">
+
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Staatsdienst
+                            <div class="popup">
+                                <b>Staatsdienst</b><br />
+                                <b><span class="number">695</span> Personen</b><br />
+                                Beamte, Diplomaten, Staatsfunktionäre,
+                                Offiziere, Richter sowie Mitarbeiter
+                                von Museen und Archiven
+                            </div>
+                        </button>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Wirtschaft
+                            <div class="popup">
+                                <b>Wirtschaftt</b><br />
+                                <b><span class="number">634</span> Personen</b><br />
+                                Personen aus dem Bereich Wirtschaft
+                                und Management, darunter Unternehmer,
+                                Manager, Fabrikanten, Händler und Bankiers
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Sozial-/Bildungswesen
+                            <div class="popup">
+                                <b>Sozial-/Bildungswesen</b><br />
+                                <b><span class="number">363</span> Personen</b><br />
+                                Sozialarbeiter sowie Lehrer und Pädagogen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Geistliche
+                            <div class="popup">
+                                <b>Geistliche</b><br />
+                                <b><span class="number">254</span> Personen</b><br />
+                                Geistliche aller Art
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Technik
+                            <div class="popup">
+                                <b>Technik</b><br />
+                                <b><span class="number">234</span> Personen</b><br />
+                                Fachkräfte aus technischen Bereichen,
+                                darunter Ingenieure, Computerspezialisten
+                                und Techniker verschiedener Fachrichtungen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Sonstige
+                            <div class="popup">
+                                <b>Sonstige</b><br />
+                                <b><span class="number">161</span> Personen</b><br />
+                                Personen, die keiner der oben genannten
+                                Berufsgruppen zugeordnet werden konnten
+                                oder deren Anzahl für die Bildung
+                                einer eigenen Gruppe zu gering war,
+                                z. B. Architekten, Übersetzer, Handwerker
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+            </p>
+            <img src="assets/images/Berufsgruppen.svg" alt="Berufsgruppen" class="fullwidth">
+
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+
+            <h2 id="punkt9">Kategorisierung der Fachbereiche</h2>
+            <p>
+                Für eine differenzierte Darstellung
+                der <b>Kerngruppe</b> (mehr dazu
+                <a href="#punkt5" class="interner-link">hier</a>)
+                wurden die Berufsgruppen <b>Geisteswissenschaften</b>
+                und <b>Exakte Wissenschaften</b> in einzelne Fachbereiche
+                unterteilt. Personen konnten dabei mehreren
+                Bereichen zugeordnet werden.
+                So sind etwa Kunsthistoriker
+                sowohl im Bereich <b>Geschichte</b>
+                als auch <b>Kunst</b>, Musikwissenschaftler
+                in <b>Kunst</b> und <b>Musik</b> und Biochemiker
+                in <b>Chemie</b> und <b>Biologie</b> vertreten.<br />
+                Im Folgenden werden Fachbereiche
+                aufgelistet.
+                Beim Klick auf den jeweiligen
+                Bereich werden nähere Informationen zur Zuordnung
+                der Personen angezeigt.
+
+
+                <!-- Linke Spalte -->
+                <div id="spaltenWrapper">
+                    <div id="containerLinks">
+                        <div class="spaltenUeberschrift">Geisteswissenschaften</div>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Geschichte
+                            <div class="popup">
+                                <b>Geschichte</b><br />
+                                <b><span class="number">349</span> Personen</b><br />
+                                Geschichtswissenschaftler aller Fachrichtungen
+                                inklusive Kunstgeschichte
+                            </div>
+                        </button>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Kunst
+                            <div class="popup">
+                                <b>Kunst</b><br />
+                                <b><span class="number">222</span> Personen</b><br />
+                                alle Wissenschaftler, deren Untersuchungsgegenstand
+                                Kunst ist, beispielsweise Kunsthistoriker
+                                oder Musikwissenschaftler
+                            </div>
+                        </button>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Sprache
+                            <div class="popup">
+                                <b>Sprache</b><br />
+                                <b><span class="number">200</span> Personen</b><br />
+                                Geisteswissenschaftler, deren Untersuchungsgegenstand
+                                Sprache ist, z.B. wie Germanisten,
+                                Romanisten, Linguisten, Philologen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Philosophie
+                            <div class="popup">
+                                <b>Philosophie</b><br />
+                                <b><span class="number">123</span> Personen</b><br />
+                                Philosophen aller Fachrichtungen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Fremdkulturen
+                            <div class="popup">
+                                <b>Fremdkulturen</b><br />
+                                <b><span class="number">108</span> Personen</b><br />
+                                Geisteswissenschaftler aller Art, die sich mit
+                                aus der westeuropäischen Perspektive
+                                fremden Sprachen bzw. Kulturen auseinandersetzten
+                                wie z. B. Spezialisten für Jüdische Philosophie,
+                                Geschichte Chinas, Arabisten, Slawisten usw.
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Musik
+                            <div class="popup">
+                                <b>Musik</b><br />
+                                <b><span class="number">98</span> Personen</b><br />
+                                Geisteswissenschaftler, deren Untersuchungsgegenstand Musik
+                                ist, wie z. B. Musikwissenschaftler, Musikhistoriker usw.
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Literatur
+                            <div class="popup">
+                                <b>Literatur</b><br />
+                                <b><span class="number">88</span> Personen</b><br />
+                                Geisteswissenschaftler, deren Untersuchungsgegenstand
+                                Literatur ist, wie z. B. Literaturhistoriker,
+                                Literaturwissenschaftler usw.
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Religion
+                            <div class="popup">
+                                <b>Religion</b><br />
+                                <b><span class="number">71</span> Personen</b><br />
+                                Geisteswissenschaftler, deren Untersuchungsgegenstand
+                                Religion ist, z.B. Theologen, Religionshistoriker,
+                                Religionsphilosophen usw.
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Alte Kulturen
+                            <div class="popup">
+                                <b>Alte Kulturen</b><br />
+                                <b><span class="number">51</span> Personen</b><br />
+                                Geisteswissenschaftler, die sich mit alten
+                                Kulturen auseinandersetzten,
+                                wie z. B. klassische Philologie, Geschichte der Antike usw.
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Archäologie
+                            <div class="popup">
+                                <b>Archäologie</b><br />
+                                <b><span class="number">22</span> Personen</b><br />
+                                Archäologen aller Fachrichtungen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Sonstige
+                            <div class="popup">
+                                <b>Sonstige</b><br />
+                                <b><span class="number">2</span> Personen</b><br />
+                                Geisteswissenschaftler, deren genaue Fachrichtung nicht bekannt ist
+                            </div>
+                        </button>
+
+                    </div>
+
+                    <!-- Rechte Spalte -->
+                    <div id="containerRechts">
+                        <div class="spaltenUeberschrift">
+                            Exakte Wissenschaften
+                        </div>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Chemie
+                            <div class="popup">
+                                <b>Chemie</b><br />
+                                <b><span class="number">418</span> Personen</b><br />
+                                Chemiker sowie Wissenschaftler angrenzender
+                                Bereiche wie Biochemie oder Chemieingenieurwesen
+                            </div>
+                        </button>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Physik
+                            <div class="popup">
+                                <b>Physik</b><br />
+                                <b><span class="number">288</span> Personen</b><br />
+                                Physiker sowie Wissenschaftler angrenzender
+                                Bereiche wie Physikalische Chemie usw.
+                            </div>
+                        </button>
+
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Biologie
+                            <div class="popup">
+                                <b></b>Biologie<br />
+                                <b><span class="number">255</span> Personen</b><br />
+                                Biologen sowie Wissenschaftler angrenzender
+                                Bereiche wie Biochemiker usw.
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Technik
+                            <div class="popup">
+                                <b>Technik</b><br />
+                                <b><span class="number">234</span> Personen</b><br />
+                                Fachkräfte aus technischen
+                                Bereichen, darunter Ingenieure,
+                                Computerspezialisten
+                                und Techniker verschiedener Fachrichtungen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Mathematik
+                            <div class="popup">
+                                <b>Mathematik</b><br />
+                                <b><span class="number">155</span> Personen</b><br />
+                                Mathematiker und Statistiker aller Art
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Geowissenschaften
+                            <div class="popup">
+                                <b>Geowissenschaften</b><br />
+                                <b><span class="number">74</span> Personen</b><br />
+                                Geowissenschaftler verschiedener Fachrichtungen,
+                                etwa Geographen, Meteorologen und Meeresbiologen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Pharmakologie
+                            <div class="popup">
+                                <b>Pharmakologie</b><br />
+                                <b><span class="number">39</span> Personen</b><br />
+                                Pharmakologen aller Art
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Agrarwissenschaften
+                            <div class="popup">
+                                <b>Agrarwissenschaften</b><br />
+                                <b><span class="number">32</span> Personen</b><br />
+                                Agrarwissenschaftler aus unterschiedlichen
+                                Bereichen wie Pflanzenbau, Tierwissenschaften,
+                                Agrarökonomie und Agrartechnik
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Astronomie
+                            <div class="popup">
+                                <b>Astronomie</b><br />
+                                <b><span class="number">17</span> Personen</b><br />
+                                Astronomen aller Art
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Materialwissenschaften
+                            <div class="popup">
+                                <b>Materialwissenschaften</b><br />
+                                <b><span class="number">15</span> Personen</b><br />
+                                Materialwissenschaftler aller Art
+                                wie Werkstoffwissenschaftler,
+                                Metallurgen, Polymerwissenschaftler
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Sonstige
+                            <div class="popup">
+                                <b>Sonstige</b><br />
+                                <b><span class="number">10</span> Personen</b><br />
+                                Mitarbeitende in Einrichtungen der
+                                exakten Wissenschaften ohne wissenschaftliche Funktion
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <img src="assets/images/Fachbereiche.svg" alt="Fachbereiche" class="fullwidth">
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt10">Kategorisierung der Konfessionen</h2>
+            <p>
+                Um eine effiziente Suche nach Vertretern bestimmter
+                Konfessionen zu ermöglichen, wurden die Personen
+                in verschiedene Konfessionsgruppen
+                eingeteilt. Dabei können Personen
+                mehreren Gruppen zugeordnet sein. So
+                sind Vertreter von Freikirchen sowohl
+                der Gruppe <b>Freikirchen</b> als auch der Gruppe <b>Christlich</b>
+                zugeordnet. Auch Personen, die im Laufe
+                ihres Lebens konvertiert sind,
+                wurden entsprechend mehreren
+                Konfessionsgruppen zugewiesen. Im Folgenden
+                werden Konfessionsgruppen
+                aufgelistet.
+                Beim Klick auf die jeweilige
+                Konfession werden nähere Informationen
+                zur Zuordnung der Personen angezeigt.
+
+                <div id="spaltenWrapper">
+                    <div id="containerLinks">
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Jüdisch
+                            <div class="popup">
+                                <b>Jüdisch</b><br />
+                                <b><span class="number">3061</span> Personen</b><br />
+                                Personen jüdischen Glaubens sowie Personen
+                                mit jüdischen Familienhintergrund
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Christlich
+                            <div class="popup">
+                                <b>Christlich</b><br />
+                                <b><span class="number">1298</span> Personen</b><br />
+                                Personen christlichen Glaubens aller Ausrichtungen
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Konfessionslos
+                            <div class="popup">
+                                <b>Konfessionslos</b><br />
+                                <b><span class="number">634</span> Personen</b><br />
+                                Konfessionslose sowie nicht praktizierende Personen
+                            </div>
+                        </button>
+                    </div>
+                    <div id="containerRechts">
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Freikirchen
+                            <div class="popup">
+                                <b>Freikirchen</b><br />
+                                <b><span class="number">83</span> Personen</b><br />
+                                Vertreter der Freikirchen wie Quäker, Mennoniten usw.
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            Andere
+                            <div class="popup">
+                                <b>Andere</b><br />
+                                <b><span class="number">10</span> Personen</b><br />
+                                Personen, die Religionsrichtungen
+                                angehören, die aus westeuropäischer
+                                Perspektive weniger verbreitet sind
+                            </div>
+                        </button>
+                        <button class="btn" onclick="togglePopup(event,this)">
+                            k.A.
+                            <div class="popup">
+                                <b>k.A.</b><br />
+                                <b><span class="number">3659</span> Personen</b><br />
+                                Personen, deren Konfession unbekannt ist.
+                                Sie wurden aufgrund ihrer großen
+                                Anzahl als eigene Gruppe ausgewiesen
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <img src="assets/images/Konfessionen.svg" alt="Konfessionen" class="fullwidth">
+            </p>
+
+
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt11">Geographische Namen</h2>
+            <p>
+                Die ursprünglich uneinheitlichen emigrationsbezogenen
+                geografischen Angaben in den Spalten <b>Ausreiseort</b>
+                und <b>Emigrationsweg</b> wurden
+                standardisiert, um die Durchsuchbarkeit
+                der Datenbank zu verbessern. Die Städtenamen wurden
+                auf die historischen deutschen Bezeichnungen vereinheitlicht
+                (z. B. <i>Pressburg</i> statt <i>Bratislava</i>, <i>Breslau</i> statt <i>Wrocław</i>).
+                Veränderungen der staatlichen Zugehörigkeit wurden
+                berücksichtigt und entsprechend vermerkt,
+                etwa <i>Deutschland/Polen</i> für <i>Breslau</i>.
+                Auch historische und heutige Ländernamen
+                wurden zusammengeführt, z. B. <i>UdSSR/Russland</i> oder <i>UdSSR/Ukraine</i>.<br />
+                Die Spalte <b>Ausreiseort</b> enthält entweder Ländernamen
+                oder, sofern bekannt, Stadt bzw. Region und Land, durch Komma getrennt.<br />
+                Die Spalte <b>Emigrationsweg</b> verzeichnet
+                die Einreisejahre in die jeweiligen Zielländer
+                sowie die Ländernamen und, wenn bekannt, auch Städtenamen.
+                Mehrfache Emigrationen werden durch Pfeile getrennt,
+                z. B. <i>1936 Prag (CSR/Tschechien) → 1938 Frankreich → 1946 Österreich</i>. Koloniale
+                Abhängigkeiten zum jeweiligen Zeitpunkt
+                wurden ebenfalls berücksichtigt, etwa <i>Kenia [Kolonie GB]</i>.
+                Zur besseren Übersicht wurden einige
+                längere Ländernamen abgekürzt: <i>UdSSR</i> (Sowjetunion), <i>CSR</i> (Tschechoslowakei),
+                <i>GB</i> (Vereinigtes Königreich), <i>USA</i> (Vereinigte Staaten)
+                und <i>DDR</i> (Deutsche Demokratische Republik).
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt12">Datenfilterung</h2>
+            <p>
+                Zur gezielten Durchsuchung der Datenbank
+                stehen dem Nutzer zwei Möglichkeiten zur
+                Verfügung: das Filterungspanel, das sich
+                direkt über der tabellarischen Datenbank
+                befindet, sowie die Spaltenfilter, die in
+                der Tabelle jeweils oberhalb der einzelnen
+                Spalten angeordnet sind. Während das
+                Filterungspanel eine übergreifende Filterung
+                nach verschiedenen Kriterien ermöglicht,
+                erlauben die Spaltenfilter eine gezielte
+                Einschränkung der Inhalte innerhalb der
+                jeweiligen Spalte. Durch die Kombination
+                beider Funktionen kann die Datenbank flexibel
+                nach unterschiedlichen Merkmalen durchsucht werden.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt13" class="cent">Filterungspanel</h2>
+            <p>
+                Auf dem Filterungspanel befinden sich verschiedene
+                Filtermöglichkeiten. Außerdem werden dort die aktuell
+                gesetzten Filter sowie die Anzahl der gefundenen
+                Ergebnisse angezeigt. Im Folgenden werden die einzelnen
+                Funktionen näher erläutert. Dabei beziehen sich
+                die Angaben zur Platzierung der
+                einzelnen Filter auf breite Geräte.
+                Auf schmaleren Geräten kann die Darstellung
+                leicht abweichen.
+            </p>
+            <h3>Oberer Bereich des Filterungspanels</h3>
+            <h4>Radiobutton (Alle oder Kerngruppe)</h4>
+            <p class="top">
+                Radiobutton-Filter befindet sich oben links auf
+                dem Filterungspanel. Mit den Radiobuttons kann
+                festgelegt werden, ob in der gesamten Datenbank
+                oder nur in der <b>Kerngruppe</b> (mehr zu <b>Kerngruppe</b>
+                <a href="#punkt5" class="interner-link">hier</a>)
+                recherchiert werden soll. Beim Umschalten zwischen
+                dem Modus <b>Alle</b> und dem Modus <b>Kerngruppe</b> werden
+                bereits gesetzte Filter automatisch zurückgesetzt.
+            </p>
+
+            <h4> Anzahl der gefundenen Ergebnisse</h4>
+            <p class="top">
+                Oben rechts im Filterpanel wird angezeigt,
+                wie viele Ergebnisse aktuell gefunden wurden.
+                Dabei werden alle aktiven Filter, einschließlich
+                Radiobutton-Auswahl und Spaltenfilter, berücksichtigt.
+            </p>
+            <h3>Unterer Bereich des Panels</h3>
+            <p class="top">
+                Im unteren Bereich des Panels befinden sich
+                die Anzeige der aktuell aktiven Filter,
+                Dropdown-Menüs zur Auswahl von Berufsgruppen,
+                Konfessionen und Ländern sowie die Eingabefelder
+                für die Jahresfilter. Bei der Auswahl der <b>Kerngruppe</b>
+                wird der Berufsgruppen-Filter zusätzlich um den
+                Fachbereich-Filter erweitert. Außerdem ist hier der
+                Button zum Zurücksetzen aller Filter zu finden.
+            </p>
+
+            <h4>Anzeige der aktiven Filter</h4>
+            <p class="top">
+                Oberhalb der Filter zeigt das Panel,
+                welche Dropdownfilter aktuell gesetzt sind.
+                So können Nutzer jederzeit erkennen, welche
+                Einschränkungen auf die Daten angewendet werden.
+                Wenn noch keine Filter ausgewählt wurden,
+                bleibt die Anzeige ausgeblendet und wird erst
+                nach der Betätigung eines Dropdowns aktualisiert.
+            </p>
+            <h4>Filter der Berufsgruppen bei Recherche in der gesamten Datenbank</h4>
+            <p class="top">
+                Mit diesem Filter können alle,
+                eine oder mehrere Berufsgruppen ausgewählt
+                werden. Derzeit sind alle Personen in
+                der Datenbank 13 verschiedenen Berufsgruppen
+                zugeordnet. Weitere Informationen zur Kategorisierung
+                der Berufe finden Sie <a href="#punkt8" class="interner-link">hier</a>.
+            </p>
+            <h4>Filter der Berufsgruppen in der Kerngruppe</h4>
+            <p class="top">
+                Bei der Recherche innerhalb der <b>Kerngruppe</b>
+                kann ausgewählt werden, ob nur in den <b>Geisteswissenschaften</b>,
+                nur in den <b>Exakten Wissenschaften</b> oder in beiden Gruppen
+                gesucht werden soll.
+            </p>
+            <h4>Fachbereich-Filter (nur in der Kerngruppe) </h4>
+            <p class="top">
+                Mit diesem Filter können alle, eine oder mehrere
+                Fachbereiche innerhalb der <b>Kerngruppe</b> ausgewählt werden.
+                Diese Möglichkeit besteht bei der Recherche in gesamter Datenbank nicht.<br />
+                Wird zuvor eine bestimmte Berufsgruppe ausgewählt,
+                zeigt der Fachbereich-Filter automatisch nur die dazugehörigen
+                Fachbereiche an.
+            </p>
+
+            <h4>Konfessionsfilter</h4>
+            <p class="top">
+                Mit diesem Filter können eine oder mehrere Konfessionsgruppen
+                gewählt werden. Derzeit sind alle Personen in der
+                Datenbank fünf verschiedenen Konfessionsgruppen zugeordnet.
+                Weitere Informationen zur Kategorisierung der Konfession
+                finden Sie <a href="#punkt10" class="interner-link">hier</a>.
+            </p>
+            <h4>Ausreiseland- und Zielland-Filter</h4>
+            <p class="top">
+                Mit diesen Filtern können ein oder mehrere
+                Ausreise- bzw. Zielländer ausgewählt werden.
+                Beim Umschalten zwischen dem Modus <b>Alle</b>
+                und dem Modus
+                <b>Kerngruppe</b> werden die Länderlisten automatisch
+                aktualisiert, sodass nur relevante Optionen
+                angezeigt werden.
+            </p>
+            <h4>Jahresfilter</h4>
+            <p class="top">
+                Mit den Jahresfiltern kann nach Geburtsjahr,
+                Sterbejahr und Ausreisejahr gesucht werden.
+                Beim Ausreisejahr ist das Jahr der ersten Ausreise
+                aus dem Ausreiseland gemeint. Die Jahre werden
+                von Nutzer direkt in die Suchfelder eingegeben.
+                Dabei sind verschiedene Eingaben möglich:
+            </p>
+            <ul id="dot">
+                <li>ein exaktes Jahr, wie z. B. <i>1933</i></li>
+                <li>mehrere exakte Jahre werden mit Komma getrennt angegeben, wie z. B. <i>1933, 1935, 1940</i></li>
+                <li>Zeiträume werden mit Vergleichszeichen angegeben, wie z. B. <i>&lt;1930</i>, <i>&gt;1900</i> oder <i>&gt;1933 &lt;1938</i></li>
+            </ul><br />
+            <h4>Button "Filter zurücksetzen"</h4>
+            <p class="top">
+                Der Button befindet sich unten rechts auf
+                dem Filterungspanel. Mit dem Button können
+                alle gesetzten Filter auf einmal gelöscht
+                werden. Dabei werden sämtliche Dropdown-Filter,
+                Jahresfilter, Spaltenfilter sowie die Sortierung
+                zurückgesetzt. Die Auswahl des Radiobuttons
+                (<b>Alle</b> oder <b>Kerngruppe</b>) bleibt hingegen unverändert
+                und kann nur manuell umgeschaltet werden.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt14" class="cent">Spaltenfilter</h2>
+            <p>
+                Die Spaltenfilter ermöglichen eine Textsuche innerhalb
+                jeder Spalte und unterscheiden dabei nicht zwischen
+                Groß- und Kleinbuchstaben. Sie können nach einem
+                <b>einzelnen Begriff</b> suchen oder <b>mehrere Begriffe</b>
+                kombinieren. Die Suche nach mehreren Begriffen kann
+                bei <b>UND</b>- und <b>ODER</b>-Bedingung erfolgen:
+            </p>
+            <ul id="dot">
+                <li>
+                    <b>UND-Bedingung</b>:<br />
+            <p>
+             Zwei oder mehr Suchbegriffe werden durch
+            Leerzeichen getrennt eingegeben. Es werden nur
+            Zeilen gefunden, in denen alle Begriffe vorkommen,
+            unabhängig von ihrer Reihenfolge. 
+            Bei der Eingabe „Albert Einstein“ erscheinen
+            daher auch Einträge wie „Einstein, Albert“. 
+            Außerdem können auch Teile eines Namens
+            oder Begriffs eingegeben werden,
+            etwa „alb ein“, um passende Treffer zu erhalten.
+           </p>
+                </li>
+                <li>
+                    <b>ODER-Bedingung</b>:<br />
+                    <p>
+                        Zwei oder mehrere Suchbegriffe
+                        werden durch | getrennt, z. B. Wien|Vienna.
+                        Gefunden werden alle Zeilen, in denen mindestens
+                        einer der Begriffe vorkommt.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Diese flexible Suche erleichtert das Auffinden von Personen und Einträgen trotz unterschiedlicher Schreibweisen oder Reihenfolgen.
+                Für eine effiziente Suche mit Spaltenfilter
+                lesen Sie den Abschnitt <a href="#punkt4" class="interner-link">Datenbeschreibung</a>.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+
+            <h2 id="punkt15">Sortierung</h2>
+            <p>
+                Neben den Filterfunktionen bietet
+                auch die Sortierung der Spalten eine
+                weitere Möglichkeit zur Exploration
+                der Daten. Aufgrund der weitgehend
+                nicht standardisierten Angaben
+                ist diese Funktion jedoch nur
+                eingeschränkt nutzbar. Spalten,
+                die sowohl numerische Werte
+                als auch Text enthalten,
+                etwa <b>Geboren</b>, <b>Gestorben</b>,
+                <b>Konfession</b> und <b>Emigrationsweg</b>,
+                lassen sich nicht zuverlässig
+                sortieren. Die Sortierung
+                wurde für diese Spalten
+                daher deaktiviert.
+                Auch bei der Spalte
+                <b>Beruf</b> ist die Sortierung
+                nur bedingt aussagekräftig,
+                da die Berufsbezeichnungen
+                in unterschiedlicher Form und
+                Detailtiefe vorliegen.
+                Dagegen ist eine zuverlässige Sortierung
+                bei den Spalten <b>Name</b> und <b>Ausreiseort</b> möglich.
+            </p>
+            <a href="#toc" class="back-button">Zurück zum Inhaltsverzeichnis</a>
+        </main>
+    </div>
+</body>
+</html>
