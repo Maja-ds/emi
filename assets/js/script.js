@@ -26,11 +26,6 @@ $(function () {
         "k.A.": ["k.a."]
     };
 
-    function initPage() {
-
-        resetAllFilters();
-        $('input[name="mode"][value="alle"]').prop('checked', true);
-    }
 
     /* DATATABLE INITIALISIERUNG */
 
@@ -742,9 +737,9 @@ $(function () {
     $(document).on('click', function () {
         $('.tooltip-name').removeClass('active');
     });
-    window.addEventListener("pageshow", function (event) {
-        initPage();
-
-        table.search('').columns().search('').draw();
-    });
+window.addEventListener("pageshow", function (event) {
+    if (!event.persisted) {
+        location.reload();
+    }
+});
 });
