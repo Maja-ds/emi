@@ -738,3 +738,8 @@ $(function () {
         $('.tooltip-name').removeClass('active');
     });
 });
+$(window).on('pageshow', function (event) {
+    if (event.originalEvent.persisted) {
+        location.reload();
+    }
+});
