@@ -741,11 +741,7 @@ $(function () {
         $('.tooltip-name').removeClass('active');
     });
 });
-document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'visible') {
-        location.reload();
-    }
-});
+
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
         window.location.reload(); // Erzwingt Neuladen und Zurücksetzen
