@@ -271,14 +271,12 @@ img.fullwidth {
 /*Media Queries*/
 @media (min-width: 769px) and (max-width: 1024px) {
         .content {
-        border-bottom: 90%;
+        margin-bottom: 120%;
     }
     #toc {
-        width: 30%;}
-    
-    .mobile {
-        color: red;
+        width: 30%;
     }
+
 }
 
 @media (max-width: 768px) {
@@ -286,7 +284,7 @@ img.fullwidth {
         flex-direction: column;
     }
         .content {
-        border-bottom: 120%;
+        margin-bottom: 120%;
     }
 
     #toc {
