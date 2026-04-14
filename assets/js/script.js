@@ -742,8 +742,17 @@ $(function () {
     });
 });
 
-window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-        window.location.reload(); // Erzwingt Neuladen und Zurücksetzen
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+
+        // 🔥 Filter neu anwenden
+        if (typeof applyFilter === "function") {
+            applyFilter();
+        }
+
+        // 🔥 DataTable sicher neu zeichnen
+        if (table) {
+            table.draw(false);
+        }
     }
 });
