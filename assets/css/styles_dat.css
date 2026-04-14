@@ -99,7 +99,7 @@ a {
 
 
 
-/*Liste Spaltenfilter*/
+/*Liste*/
 #dot {
     list-style-type: disc;
     padding-left: 30px;
@@ -107,7 +107,7 @@ a {
 
     #dot li {
         text-align: justify;
-        margin-bottom: 0.8em;
+        line-height: 180%;
     }
 
 /*Inhaltsverzeichnis*/
@@ -280,7 +280,7 @@ img.fullwidth {
         flex-direction: column;
     }
         .content {
-        border-bottom: 90%;
+        border-bottom: 120%;
     }
 
     #toc {
