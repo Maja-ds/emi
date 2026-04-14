@@ -745,14 +745,33 @@ $(function () {
 document.addEventListener("visibilitychange", () => {
     if (!document.hidden) {
 
-        // 🔥 Filter neu anwenden
-        if (typeof applyFilter === "function") {
-            applyFilter();
+        const mode = $('input[name="mode"]:checked').val();
+
+        if (mode === "alle") {
+
+            $('#berufsgruppeDropdown').show();
+            $('#bereichFilter').hide();
+            $('#disziplinDropdown').hide().empty();
+
+            updateLandOptions(daten);
+            updateEmigrationslandDropdown(daten);
+
+        } else {
+
+            $('#berufsgruppeDropdown').hide();
+            $('#bereichFilter').show();
+
+            $('#disziplinDropdown').show();
+            createDisziplinDropdown("Alle");
+
+            let kerngruppeData = daten.filter(d => 
+                d.Bereich && d.Bereich.trim() !== ""
+            );
+
+            updateLandOptions(kerngruppeData);
+            updateEmigrationslandDropdown(kerngruppeData);
         }
 
-        // 🔥 DataTable sicher neu zeichnen
-        if (table) {
-            table.draw(false);
-        }
+        applyFilter();
     }
 });
