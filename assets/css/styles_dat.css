@@ -273,6 +273,12 @@ img.fullwidth {
         .content {
         border-bottom: 90%;
     }
+    #toc {
+        width: 30%;}
+    
+    .mobile {
+        color: red;
+    }
 }
 
 @media (max-width: 768px) {
