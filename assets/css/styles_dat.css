@@ -267,13 +267,11 @@ img.fullwidth {
 .mobile {
     display: none;
 }
-.content h2 {
-    scroll-margin-top: 140px;
-}
+
 /*Media Queries*/
 @media (min-width: 769px) and (max-width: 1024px) {
-        .content h2 {
-        scroll-margin-top: 200px;
+        .content {
+        border-bottom: 90%;
     }
 }
 
@@ -281,8 +279,8 @@ img.fullwidth {
     .layout {
         flex-direction: column;
     }
-        .content h2 {
-        scroll-margin-top: 90px;
+        .content {
+        border-bottom: 90%;
     }
 
     #toc {
