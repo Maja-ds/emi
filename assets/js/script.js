@@ -719,7 +719,7 @@ $(function () {
             return true;
         });
 
-        table.page('first').draw('page');
+        table.draw();
 
         $('#rowCount').text(table.rows({ filter: 'applied' }).count());
         updateFilterStatus();
