@@ -999,6 +999,9 @@ $(function () {
 
         $('.emigLandCheckbox').prop('checked', false);
         $('.emigLandCheckbox[value="all"]').prop('checked', true);
+        
+        table.columns().search('');
+        table.order([[0, 'asc']]);
 
         applyFilter();
     }
