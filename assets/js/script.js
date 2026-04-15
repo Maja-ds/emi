@@ -719,7 +719,7 @@ $(function () {
             return true;
         });
 
-        table.draw(false);
+        table.page('first').draw('page');
 
         $('#rowCount').text(table.rows({ filter: 'applied' }).count());
         updateFilterStatus();
@@ -999,11 +999,9 @@ $(function () {
 
         $('.emigLandCheckbox').prop('checked', false);
         $('.emigLandCheckbox[value="all"]').prop('checked', true);
-        
-        table.columns().search('');
-        table.order([[0, 'asc']]);
 
-        applyFilter();
+        table.columns().search('');
+        table.order([[0, 'asc']]).draw();
     }
 
     $('#resetFilters').on('click', function () {
