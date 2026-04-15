@@ -514,7 +514,7 @@ $(function () {
             active.push("Fachbereich: " + filterState.disziplinen.join(", "));
         }
         if (filterState.religion.length > 0) {
-            active.push("Religion: " + filterState.religion.join(", "));
+            active.push("Konfession: " + filterState.religion.join(", "));
         }
 
         if (filterState.land.length > 0) {
