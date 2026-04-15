@@ -1,9 +1,24 @@
-let table;
-let applyFilter;
-let updateFilterStatus;
+const filterState = {
+    mode: "alle",
+
+    berufsgruppen: [],
+    bereich: "Alle",
+    disziplinen: [],
+
+    religion: [],
+    land: [],
+    emigLand: [],
+
+    jahr: {
+        geburtsjahr: "",
+        sterbejahr: "",
+        ausreisejahr: ""
+    }
+};
 
 $(function () {
 
+    loadFilterState();
     function showLoading() {
         $('#loadingOverlay').addClass('show').show();
     }
@@ -28,11 +43,22 @@ $(function () {
         "Konfessionslos": ["konfessionslos"],
         "k.A.": ["k.a."]
     };
+    function saveFilterState() {
+        sessionStorage.setItem('filterState', JSON.stringify(filterState));
+    }
+    function loadFilterState() {
+        const saved = sessionStorage.getItem('filterState');
 
+        if (!saved) return;
+
+        const parsed = JSON.parse(saved);
+
+        Object.assign(filterState, parsed);
+    }
 
     /* DATATABLE INITIALISIERUNG */
 
-        table = $('#demo').DataTable({
+    let table = $('#demo').DataTable({
         data: daten,
         pageLength: 10,
         order: [[0, 'asc']],
@@ -156,54 +182,66 @@ $(function () {
         container.append(box);
     }
     createBerufsgruppeDropdown();
+    renderFiltersFromState();
 
     // Fachbereichdropdown
-    function createDisziplinDropdown(bereich) {
-
-        // Sicherheits-Fallback
+    function createDisziplinDropdown(bereich, selectedValues = []) {
+        
         if (!bereich) bereich = "Alle";
 
-        let container = $('#disziplinDropdown');
+        const container = $('#disziplinDropdown');
         container.empty();
 
         container.append('<button type="button" class="filter-btn">Fachbereich wählen</button>');
 
-        let box = $('<div class="filter-box"></div>');
+        const box = $('<div class="filter-box"></div>');
 
-        // "Alle" immer zuerst
-        box.append(`<label>
-        <input type="checkbox" class="disziCheckbox" value="all" checked> Alle
-    </label><br>`);
+        // STATE-DEFINITION:
+        // [] = ALLE aktiv
+        const isAllActive = selectedValues.length === 0;
 
-        // Fachbereich abhängig vom Bereich
+        // ALL checkbox (nur UI)
+        box.append(`
+        <label>
+            <input type="checkbox"
+                   class="disziCheckbox"
+                   value="all"
+                   ${isAllActive ? "checked" : ""}>
+            Alle
+        </label><br>
+    `);
+
+        // Disziplinen berechnen
         let disziplinen = [...new Set(
             daten
-                .filter(d => {
-                    // wenn Alle → keine Einschränkung
-                    if (bereich === "Alle") return true;
-
-                    // sonst exakt matchen
-                    return d.Bereich === bereich;
-                })
+                .filter(d => bereich === "Alle" || d.Bereich === bereich)
                 .flatMap(d => splitValues(d.Fachbereich))
         )].sort();
 
-        // Sonstige ans Ende
         const ohneSonstige = disziplinen.filter(v => v !== "Sonstige");
         const mitSonstige = disziplinen.includes("Sonstige")
             ? [...ohneSonstige, "Sonstige"]
             : ohneSonstige;
 
-        // Rendern
+        // Checkboxen
         mitSonstige.forEach(v => {
+
+            const checked = selectedValues.includes(v);
+
             box.append(`
             <label>
-                <input type="checkbox" class="disziCheckbox" value="${v}"> ${v}
+                <input type="checkbox"
+                       class="disziCheckbox"
+                       value="${v}"
+                       ${checked ? "checked" : ""}>
+                ${v}
             </label><br>
         `);
         });
 
         container.append(box);
+        box.find('input.disziCheckbox[value="all"]')
+            .prop('checked', isAllActive);
     }
 
     //Ausreiselanddropdown
@@ -213,9 +251,17 @@ $(function () {
         container.append('<button type="button" class="filter-btn">Ausreiseland wählen</button>');
 
         let box = $('<div class="filter-box"></div>');
-
+        const isAllActive = filterState.land.length === 0;
         // "Alle" Checkbox immer zuerst
-        box.append(`<label><input type="checkbox" class="landCheckbox" value="all" checked> Alle</label><br>`);
+        box.append(`
+        <label>
+            <input type="checkbox"
+                   class="landCheckbox"
+                   value="all"
+                   ${isAllActive ? "checked" : ""}>
+            Alle
+        </label><br>
+    `);
 
         // Alle Länder extrahieren
         let laender = [...new Set(
@@ -225,7 +271,20 @@ $(function () {
         )].sort();
 
         // Checkboxen für Länder hinzufügen
-        laender.forEach(l => box.append(`<label><input type="checkbox" class="landCheckbox" value="${l}"> ${l}</label><br>`));
+        laender.forEach(l => {
+
+            const checked = filterState.land.includes(l);
+
+            box.append(`
+            <label>
+                <input type="checkbox"
+                       class="landCheckbox"
+                       value="${l}"
+                       ${checked ? "checked" : ""}>
+                ${l}
+            </label><br>
+        `);
+        });
 
         container.append(box);
     }
@@ -233,19 +292,42 @@ $(function () {
         let container = $('#landDropdown');
         let box = container.find('.filter-box');
         box.empty();
-        box.append(`<label><input type="checkbox" class="landCheckbox" value="all" checked> Alle</label><br>`);
+        const isAllActive = filterState.land.length === 0;
 
+        box.append(`
+    <label>
+        <input type="checkbox"
+               class="landCheckbox"
+               value="all"
+               ${isAllActive ? "checked" : ""}>
+        Alle
+    </label><br>
+`);
         let laender = [...new Set(
             dataArray
                 .map(d => d.Ausreiseland) // neue Spalte
                 .filter(v => v && v.toLowerCase() !== "k.a.")
         )].sort();
 
-        laender.forEach(l => box.append(`<label><input type="checkbox" class="landCheckbox" value="${l}"> ${l}</label><br>`));
+        laender.forEach(l => {
+
+            const checked = filterState.land.includes(l);
+
+            box.append(`
+            <label>
+                <input type="checkbox"
+                       class="landCheckbox"
+                       value="${l}"
+                       ${checked ? "checked" : ""}>
+                ${l}
+            </label><br>
+        `);
+        });
     }
     createLandDropdown();
     updateLandOptions(daten);
     $('#disziplinDropdown').hide();
+    renderFiltersFromState();
 
     //Emigrationslanddropdown
 
@@ -314,6 +396,52 @@ $(function () {
     createEmigrationslandDropdown();
     updateEmigrationslandDropdown(daten);
 
+ 
+
+       function restoreUIFromState() {
+
+            // MODE
+            $('input[name="mode"]').each(function () {
+                this.checked = ($(this).val() === filterState.mode);
+            });
+
+            // BEREICH
+            $('#bereichFilter input').each(function () {
+                this.checked = ($(this).val() === filterState.bereich);
+            });
+           let dataForDropdown;
+            if (filterState.mode === "alle") {
+
+                $('#berufsgruppeDropdown').show();
+                $('#bereichFilter').hide();
+
+                $('#disziplinDropdown').hide().empty();
+                dataForDropdown = daten;
+
+            } else {
+
+                $('#berufsgruppeDropdown').hide();
+                $('#bereichFilter').show();
+
+                $('#disziplinDropdown').show().empty();
+
+                createDisziplinDropdown(
+                    filterState.bereich || "Alle",
+                    filterState.disziplinen
+                );
+                dataForDropdown = daten.filter(d =>
+                    d.Bereich && d.Bereich.trim() !== ""
+                );
+           }
+           updateLandOptions(dataForDropdown);
+           updateEmigrationslandDropdown(dataForDropdown);
+           renderFiltersFromState();
+           applyFilter();
+    }
+
+   
+        
+
     // Dropdown öffnen/schließen
     $(document).on('click', '.filter-btn', function (e) {
         e.stopPropagation();
@@ -374,50 +502,106 @@ $(function () {
 
         let active = [];
 
-        let berufs = $('.berufsCheckbox:checked').map((i, e) => e.value).get();
-        if (berufs.includes("all") === false && berufs.length > 0) {
-            active.push("Beruf: " + berufs.join(", "));
+        if (filterState.berufsgruppen.length > 0) {
+            active.push("Beruf: " + filterState.berufsgruppen.join(", "));
         }
 
-        let bereich = $('#bereichFilter input:checked').val() || "Alle"
-        if (bereich && bereich !== "Alle") {
-            active.push("Bereich: " + bereich);
+        if (filterState.bereich && filterState.bereich !== "Alle") {
+            active.push("Bereich: " + filterState.bereich);
         }
 
-        let diszi = $('.disziCheckbox:checked').map((i, e) => e.value).get();
-        if (diszi.includes("all") === false && diszi.length > 0) {
-            active.push("Fachbereich: " + diszi.join(", "));
+        if (filterState.disziplinen.length > 0) {
+            active.push("Fachbereich: " + filterState.disziplinen.join(", "));
+        }
+        if (filterState.religion.length > 0) {
+            active.push("Religion: " + filterState.religion.join(", "));
         }
 
-        let religion = $('input[name="religionFilter"]:checked').map((i, e) => e.value).get();
-        if (religion.includes("all") === false && religion.length > 0) {
-            active.push("Religion: " + religion.join(", "));
+        if (filterState.land.length > 0) {
+            active.push("Ausreiseland: " + filterState.land.join(", "));
         }
-        let land = $('.landCheckbox:checked').map((i, e) => e.value).get();
-        if (land.includes("all") === false && land.length > 0) {
-            active.push("Ausreiseland: " + land.join(", "));
-        }
-        let emigLand = $('.emigLandCheckbox:checked').map((i, e) => e.value).get();
-        if (emigLand.includes("all") === false && emigLand.length > 0) {
-            active.push("Zielland: " + emigLand.join(", "));
+
+        if (filterState.emigLand.length > 0) {
+            active.push("Zielland: " + filterState.emigLand.join(", "));
         }
 
         $('#activeFilters').html(active.map(f => `<span>${f}</span>`).join(" "));
     }
 
+    function renderFiltersFromState() {
+
+        // Berufsgruppe
+        $('.berufsCheckbox').each(function () {
+
+            const val = $(this).val();
+
+            if (val === "all") {
+
+                // "Alle" ist aktiv, wenn nichts ausgewählt
+                this.checked = filterState.berufsgruppen.length === 0;
+
+            } else {
+
+                this.checked = filterState.berufsgruppen.includes(val);
+            }
+        });
+        $('.disziCheckbox').each(function () {
+
+            const val = $(this).val();
+
+            if (val === "all") {
+
+                this.checked = filterState.disziplinen.length === 0;
+
+            } else {
+
+                this.checked = filterState.disziplinen.includes(val);
+            }
+        });
+
+        $('input[name="religionFilter"]').each(function () {
+
+            const val = $(this).val();
+
+            if (val === "all") {
+                this.checked = filterState.religion.length === 0;
+            } else {
+                this.checked = filterState.religion.includes(val);
+            }
+        });
+        // LAND
+        $('.landCheckbox').each(function () {
+
+            const val = $(this).val();
+
+            if (val === "all") {
+                this.checked = filterState.land.length === 0;
+            } else {
+                this.checked = filterState.land.includes(val);
+            }
+        });
+        $('.emigLandCheckbox').each(function () {
+
+            const val = $(this).val();
+
+            if (val === "all") {
+                this.checked = filterState.emigLand.length === 0;
+            } else {
+                this.checked = filterState.emigLand.includes(val);
+            }
+        });
+    }
+
     // Filterfunktion
     function applyFilter() {
-        let mode = $('input[name="mode"]:checked').val();
-
-        let berufsSelected = $('.berufsCheckbox:checked').map((i, e) => e.value).get();
-        if (berufsSelected.includes("all")) berufsSelected = [];
-        let bereich = $('#bereichFilter input:checked').val() || "Alle";
-        let disziSelected = $('.disziCheckbox:checked').map((i, e) => e.value).get();
-        if (disziSelected.includes("all")) disziSelected = [];
-        let landSelected = $('.landCheckbox:checked').map((i, e) => e.value).get();
-        if (landSelected.includes("all")) landSelected = [];
-        let emigLandSelected = $('.emigLandCheckbox:checked').map((i, e) => e.value).get();
-        if (emigLandSelected.includes("all")) emigLandSelected = [];
+ 
+        let mode = filterState.mode;
+        let berufsSelected = filterState.berufsgruppen;
+        let bereich = filterState.bereich;
+        let disziSelected = [...filterState.disziplinen];
+        let landSelected = [...filterState.land];
+        let emigLandSelected = [...filterState.emigLand];
+        let religionSelected = [...filterState.religion];
 
 
         $.fn.dataTable.ext.search.length = 0;
@@ -475,7 +659,6 @@ $(function () {
             });
 
             if (!yearPass) return false;
-
             // --- Berufsgruppe / Bereich / Disziplin ---
             if (mode === "alle") {
 
@@ -491,7 +674,7 @@ $(function () {
                     row.Bereich !== "Exakte Wissenschaften"
                 ) return false;
 
-                let bereich = $('#bereichFilter input:checked').val() || "Alle";
+                let bereich = filterState.bereich;
 
                 if (bereich !== "Alle" && row.Bereich !== bereich) return false;
 
@@ -540,132 +723,284 @@ $(function () {
 
         $('#rowCount').text(table.rows({ filter: 'applied' }).count());
         updateFilterStatus();
+        saveFilterState();
     }
 
 
     // Events
     $(document).on('change', '.berufsCheckbox', function () {
-        const isAll = $(this).val() === "all";
-        const box = $(this).closest('.filter-box');
-        const allCheckbox = box.find('input[value="all"]');
 
-        if (isAll && this.checked) {
-            box.find('input[type="checkbox"]').not(this).prop('checked', false);
-        } else if (!isAll && this.checked) {
-            allCheckbox.prop('checked', false);
+        const value = $(this).val();
+        const isChecked = this.checked;
+
+        if (value === "all") {
+
+            // "Alle" = nichts ausgewählt
+            filterState.berufsgruppen = [];
+
+        } else {
+
+            if (isChecked) {
+
+                // hinzufügen (falls noch nicht drin)
+                if (!filterState.berufsgruppen.includes(value)) {
+                    filterState.berufsgruppen.push(value);
+                }
+
+            } else {
+
+                // entfernen
+                filterState.berufsgruppen =
+                    filterState.berufsgruppen.filter(v => v !== value);
+            }
         }
 
+        renderFiltersFromState();
         applyFilter();
     });
+
     $(document).on('change', '#bereichFilter input', function () {
 
         const bereich = $('#bereichFilter input:checked').val() || "Alle";
+        filterState.bereich = bereich;
+        filterState.disziplinen = [];
 
-        createDisziplinDropdown(bereich);
+        createDisziplinDropdown(bereich, filterState.disziplinen);
+
+        saveFilterState();
         applyFilter();
     });
 
     $(document).on('change', '.disziCheckbox', function () {
-        const isAll = $(this).val() === "all";
-        const box = $(this).closest('.filter-box');
-        const allCheckbox = box.find('input[value="all"]');
 
-        if (isAll && this.checked) {
-            // alle anderen abwählen
-            box.find('input[type="checkbox"]').not(this).prop('checked', false);
-        } else if (!isAll && this.checked) {
-            // wenn andere angeklickt wird, "Alle" abwählen
-            allCheckbox.prop('checked', false);
+        const value = $(this).val();
+        const isAll = value === "all";
+
+        if (isAll) {
+
+            if (this.checked) {
+                // ALLE aktiv → STATE leeren
+                filterState.disziplinen = [];
+
+                // alle anderen abwählen
+                $(this).closest('.filter-box')
+                    .find('input[type="checkbox"]')
+                    .not(this)
+                    .prop('checked', false);
+            }
+
+        } else {
+
+            if (this.checked) {
+
+                // "all" deaktivieren
+                $(this).closest('.filter-box')
+                    .find('input[value="all"]')
+                    .prop('checked', false);
+
+                if (!filterState.disziplinen.includes(value)) {
+                    filterState.disziplinen.push(value);
+                }
+
+            } else {
+
+                filterState.disziplinen =
+                    filterState.disziplinen.filter(v => v !== value);
+
+                // wenn nichts mehr gewählt → ALL aktivieren
+                if (filterState.disziplinen.length === 0) {
+                    $(this).closest('.filter-box')
+                        .find('input[value="all"]')
+                        .prop('checked', true);
+                }
+            }
         }
 
+        saveFilterState();
         applyFilter();
     });
+
     $(document).on('change', 'input[name="religionFilter"]', function () {
-        const checkboxes = Array.from(document.querySelectorAll('input[name="religionFilter"]'));
-        const allCheckbox = checkboxes.find(cb => cb.value === 'all');
-        const changed = this;
 
-        // Wenn "Alle" angeklickt wird, andere abwählen
-        if (changed === allCheckbox && allCheckbox.checked) {
-            checkboxes.forEach(cb => cb.checked = (cb === allCheckbox));
+        const value = $(this).val();
+        const isAll = value === "all";
+
+        if (isAll) {
+
+            if (this.checked) {
+                filterState.religion = [];
+
+                $('input[name="religionFilter"]')
+                    .not(this)
+                    .prop('checked', false);
+            }
+
+        } else {
+
+            if (this.checked) {
+
+                filterState.religion.push(value);
+                filterState.religion = [...new Set(filterState.religion)];
+
+                $('input[name="religionFilter"][value="all"]')
+                    .prop('checked', false);
+
+            } else {
+
+                filterState.religion =
+                    filterState.religion.filter(v => v !== value);
+
+                if (filterState.religion.length === 0) {
+                    $('input[name="religionFilter"][value="all"]')
+                        .prop('checked', true);
+                }
+            }
         }
 
-        // Wenn andere angeklickt wird, "Alle" abwählen
-        if (changed !== allCheckbox && changed.checked) {
-            allCheckbox.checked = false;
-        }
-
+        saveFilterState();
         applyFilter();
     });
 
     $(document).on('change', '.landCheckbox', function () {
-        const isAll = $(this).val() === "all";
-        const box = $(this).closest('.filter-box');
-        const allCheckbox = box.find('input[value="all"]');
 
-        if (isAll && this.checked) {
-            box.find('input[type="checkbox"]').not(this).prop('checked', false);
-        } else if (!isAll && this.checked) {
-            allCheckbox.prop('checked', false);
+        const value = $(this).val();
+        const isAll = value === "all";
+
+        if (isAll) {
+
+            if (this.checked) {
+                filterState.land = [];
+                $(this).closest('.filter-box')
+                    .find('input[type="checkbox"]')
+                    .not(this)
+                    .prop('checked', false);
+            }
+
+        } else {
+
+            if (this.checked) {
+
+                filterState.land.push(value);
+                filterState.land = [...new Set(filterState.land)];
+
+                $(this).closest('.filter-box')
+                    .find('input[value="all"]')
+                    .prop('checked', false);
+
+            } else {
+
+                filterState.land = filterState.land.filter(v => v !== value);
+
+                if (filterState.land.length === 0) {
+                    $(this).closest('.filter-box')
+                        .find('input[value="all"]')
+                        .prop('checked', true);
+                }
+            }
         }
 
+        saveFilterState();
         applyFilter();
     });
 
     $(document).on('change', '.emigLandCheckbox', function () {
 
-        const isAll = $(this).val() === "all";
-        const box = $(this).closest('.filter-box');
-        const allCheckbox = box.find('input[value="all"]');
+        const value = $(this).val();
+        const isAll = value === "all";
 
-        if (isAll && this.checked) {
-            box.find('input[type="checkbox"]').not(this).prop('checked', false);
-        } else if (!isAll && this.checked) {
-            allCheckbox.prop('checked', false);
+        if (isAll) {
+
+            if (this.checked) {
+                filterState.emigLand = [];
+
+                $(this).closest('.filter-box')
+                    .find('input[type="checkbox"]')
+                    .not(this)
+                    .prop('checked', false);
+            }
+
+        } else {
+
+            if (this.checked) {
+
+                if (!filterState.emigLand.includes(value)) {
+                    filterState.emigLand.push(value);
+                }
+
+                filterState.emigLand = [...new Set(filterState.emigLand)];
+
+                $(this).closest('.filter-box')
+                    .find('input[value="all"]')
+                    .prop('checked', false);
+
+            } else {
+
+                filterState.emigLand =
+                    filterState.emigLand.filter(v => v !== value);
+
+                if (filterState.emigLand.length === 0) {
+                    $(this).closest('.filter-box')
+                        .find('input[value="all"]')
+                        .prop('checked', true);
+                }
+            }
         }
 
+        saveFilterState();
         applyFilter();
     });
 
     let yearFilterTimeout;
     $('.yearFilter').on('keyup', function () {
+
+        const column = $(this).data('column');
+        const value = $(this).val();
+
+        filterState.jahr[column] = value;
+
         clearTimeout(yearFilterTimeout);
-        yearFilterTimeout = setTimeout(applyFilter, 200); // 200ms nach Tippen
+        yearFilterTimeout = setTimeout(() => {
+            applyFilter();
+            saveFilterState();
+        }, 200);
+
     });
 
     // Reset
 
     function resetAllFilters() {
 
-        // Berufsgruppe
+        filterState.berufsgruppen = [];
+        filterState.bereich = "Alle";
+        filterState.disziplinen = [];
+        filterState.land = [];
+        filterState.emigLand = [];
+        filterState.religion = [];
+        filterState.jahr = {
+            geburtsjahr: "",
+            sterbejahr: "",
+            ausreisejahr: ""
+        };
+
+        $('.yearFilter').val('');
+
         $('.berufsCheckbox').prop('checked', false);
         $('.berufsCheckbox[value="all"]').prop('checked', true);
 
-        // Bereich + Disziplin (Kernmodus)
-        createDisziplinDropdown("Alle");
-
         $('#bereichFilter input').prop('checked', false);
         $('#bereichFilter input[value="Alle"]').prop('checked', true);
+        createDisziplinDropdown("Alle");
 
-        // Religion
         $('input[name="religionFilter"]').prop('checked', false);
         $('input[name="religionFilter"][value="all"]').prop('checked', true);
 
-        // Länder
         $('.landCheckbox').prop('checked', false);
         $('.landCheckbox[value="all"]').prop('checked', true);
 
-        // Emigrationsländer
         $('.emigLandCheckbox').prop('checked', false);
         $('.emigLandCheckbox[value="all"]').prop('checked', true);
 
-        // Jahre
-        $('.yearFilter').val('');
-
-        // Tabellenfilter
-        $('#demo thead input').val('');
-        table.columns().search('');
-        table.order([[0, 'asc']]).draw();
+        applyFilter();
     }
 
     $('#resetFilters').on('click', function () {
@@ -690,14 +1025,18 @@ $(function () {
 
         setTimeout(() => {
 
+            const mode = $(this).val();
+
+            // 1. STATE setzen
+            filterState.mode = mode;
             resetAllFilters();
-
-            let mode = $(this).val();
-
+           
+            // 4. Dynamische UI neu bauen
             if (mode === "alle") {
 
                 $('#berufsgruppeDropdown').show();
                 $('#bereichFilter').hide();
+
                 $('#disziplinDropdown').hide().empty();
 
                 updateLandOptions(daten);
@@ -708,18 +1047,23 @@ $(function () {
                 $('#berufsgruppeDropdown').hide();
                 $('#bereichFilter').show();
 
-                const bereich = "Alle";
                 $('#disziplinDropdown').show();
-                createDisziplinDropdown(bereich);
 
+                createDisziplinDropdown("Alle");
 
-                let kerngruppeData = daten.filter(d => d.Bereich && d.Bereich.trim() !== "");
+                let kerngruppeData = daten.filter(d =>
+                    d.Bereich && d.Bereich.trim() !== ""
+                );
 
                 updateLandOptions(kerngruppeData);
                 updateEmigrationslandDropdown(kerngruppeData);
             }
 
+            // 5. FILTER ANWENDEN (nachdem alles steht)
             applyFilter();
+
+            // 6. STATE speichern
+            saveFilterState();
 
             hideLoading();
 
@@ -740,38 +1084,7 @@ $(function () {
     $(document).on('click', function () {
         $('.tooltip-name').removeClass('active');
     });
+
+    restoreUIFromState();
 });
 
-document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) {
-
-        const mode = $('input[name="mode"]:checked').val();
-
-        if (mode === "alle") {
-
-            $('#berufsgruppeDropdown').show();
-            $('#bereichFilter').hide();
-            $('#disziplinDropdown').hide().empty();
-
-            updateLandOptions(daten);
-            updateEmigrationslandDropdown(daten);
-
-        } else {
-
-            $('#berufsgruppeDropdown').hide();
-            $('#bereichFilter').show();
-
-            $('#disziplinDropdown').show();
-            createDisziplinDropdown("Alle");
-
-            let kerngruppeData = daten.filter(d => 
-                d.Bereich && d.Bereich.trim() !== ""
-            );
-
-            updateLandOptions(kerngruppeData);
-            updateEmigrationslandDropdown(kerngruppeData);
-        }
-
-        applyFilter();
-    }
-});
