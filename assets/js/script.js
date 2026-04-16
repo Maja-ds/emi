@@ -140,7 +140,7 @@ $(function () {
 
     $('#demo thead tr:eq(1) th').each(function (i) {
         let title = $(this).text();
-        $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;"/>');
+        $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;" spellcheck="false" autocomplete="off"/>');
     });
 
 
