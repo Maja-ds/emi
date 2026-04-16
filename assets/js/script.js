@@ -721,8 +721,7 @@ $(function () {
                 ) return false;
             }
 
-            let religionSelected = $('input[name="religionFilter"]:checked').map((i, e) => e.value).get();
-
+            let religionSelected = [...filterState.religion];
             // "All" bedeutet: keine Einschränkung
             if (religionSelected.includes("all")) religionSelected = [];
 
