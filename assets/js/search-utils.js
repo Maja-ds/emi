@@ -1,5 +1,5 @@
 function buildSearchRegex(input) {
-    if (!input) return '';
+    if (!input.trim()) return '';
 
     let andParts = input.split(/\s+/).map(part => {
 
@@ -19,5 +19,7 @@ function buildSearchRegex(input) {
         return '(?=.*' + escapeRegex(part) + ')';
     }).filter(Boolean);
 
-    return '^' + andParts.join('') + '.*';
+    if (andParts.length === 0) return '';
+
+    return andParts.join('');
 }
