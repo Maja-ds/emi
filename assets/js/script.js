@@ -161,32 +161,36 @@ $(function () {
     // Highlighting
     table.on('draw', function () {
 
-        $('#demo tbody td').unmark();
+        const headers = $('#demo thead tr:eq(1) input');
 
-        $('#demo thead tr:eq(1) input').each(function (colIndex) {
+        setTimeout(() => {
 
-            let val = $(this).val().trim();
-            if (!val) return;
+            $('#demo tbody td').unmark();
 
-            let tokens = val.match(/"[^"]+"|\S+/g) || [];
+            headers.each(function (colIndex) {
 
-            let terms = tokens
-                .filter(t => !t.startsWith('!'))
-                .flatMap(t => {
-                    if (t.includes('|')) return t.split('|');
-                    if (t.startsWith('"')) return [t.slice(1, -1)];
-                    return [t];
-                });
+                const val = $(this).val().trim();
+                if (!val) return;
 
-            $('#demo tbody tr').each(function () {
-                $(this).find('td').eq(colIndex).mark(terms, {
-                    separateWordSearch: false,
-                    exclude: ['.info-text'] 
+                const tokens = val.match(/"[^"]+"|\S+/g) || [];
+
+                const terms = tokens
+                    .filter(t => !t.startsWith('!'))
+                    .flatMap(t => {
+                        if (t.includes('|')) return t.split('|');
+                        if (t.startsWith('"')) return [t.slice(1, -1)];
+                        return [t];
+                    });
+
+                $('#demo tbody tr').each(function () {
+                    $(this).find('td').eq(colIndex).mark(terms, {
+                        separateWordSearch: false,
+                        exclude: ['.info-text']
+                    });
                 });
             });
 
-        });
-
+        }, 0);
     });
 
     // Update Row Count
