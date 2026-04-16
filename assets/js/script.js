@@ -1000,8 +1000,11 @@ $(function () {
         $('.emigLandCheckbox').prop('checked', false);
         $('.emigLandCheckbox[value="all"]').prop('checked', true);
 
-        table.columns().search('');
-        table.order([[0, 'asc']]).draw();
+     
+    table.order([[0, 'asc']]).draw();
+    $('#demo thead tr:eq(1) input').val('');
+    table.columns().search('');
+    $('#demo tbody td').unmark();
     }
 
     $('#resetFilters').on('click', function () {
