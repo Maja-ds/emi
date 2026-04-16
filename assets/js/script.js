@@ -144,19 +144,35 @@ $(function () {
     });
 
 
-    // Spaltenfilter (UND / ODER / NOT)
-    $('#demo thead tr:eq(1) input').on('keyup change', function () {
+  $('#demo thead tr:eq(1) input').on('keydown', function (e) {
 
-        let colIndex = $(this).closest('th').index();
-        let val = $(this).val().trim();
+      if (e.key !== "Enter") return;
 
-        let regex = buildSearchRegex(val);
+      let colIndex = $(this).closest('th').index();
+      let val = $(this).val().trim();
 
-        table
-            .column(colIndex)
-            .search(regex, true, false)
-            .draw();
-    });
+      let regex = buildSearchRegex(val);
+
+      table
+          .column(colIndex)
+          .search(regex, true, false)
+          .draw();
+  });
+    
+  $('#demo thead tr:eq(1) input').on('input', function () {
+
+      let val = $(this).val().trim();
+
+      // Nur reagieren wenn wirklich leer
+      if (val !== '') return;
+
+      let colIndex = $(this).closest('th').index();
+
+      table
+          .column(colIndex)
+          .search('', true, false)
+          .draw();
+  });
 
     // Highlighting
     table.on('draw', function () {
