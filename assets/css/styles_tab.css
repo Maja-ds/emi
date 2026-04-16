@@ -8,7 +8,7 @@ body {
 
 h1 {
     font-weight: 500;
-    color: green;
+    color: yellow;
 }
 
 nav .container-fluid {
@@ -723,7 +723,7 @@ a[x-apple-data-detectors] {
 
     .table-container,
     .text-container {
-        width: 98%;
+        width: 95%;
         padding: 0 10px;
     }
 
