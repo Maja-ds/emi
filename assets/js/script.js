@@ -108,9 +108,39 @@ $(function () {
 
     /* SUCHFILTER */
 
+    function escapeRegex(text) {
+        return text.replace(/[.*+?^${}()[\]\\]/g, '\\$&');
+    }
+
+    function buildSearchRegex(input) {
+        if (!input) return '';
+
+        let tokens = input.trim().split(/\s+/);
+
+        let parts = tokens.map(t => {
+
+            // OR-Bedingung
+            if (t.includes('|')) {
+                let orParts = t
+                    .split('|')
+                    .map(p => escapeRegex(p.trim()))
+                    .filter(Boolean);
+
+                return '(' + orParts.join('|') + ')';
+            }
+
+            // AND-Teil
+            return escapeRegex(t);
+
+        }).filter(Boolean);
+
+        // AND-Verknüpfung
+        return parts.map(p => '(?=.*' + p + ')').join('');
+    }
+
     $('#demo thead tr:eq(1) th').each(function (i) {
         let title = $(this).text();
-        $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;" spellcheck="false" autocomplete="off"/>');
+        $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;"/>');
     });
 
 
@@ -128,6 +158,7 @@ $(function () {
             .draw();
     });
 
+    // Highlighting
     table.on('draw', function () {
 
         $('#demo tbody td').unmark();
@@ -137,14 +168,20 @@ $(function () {
             let val = $(this).val().trim();
             if (!val) return;
 
-            let terms = val
-                .split(/\s+/)
-                .flatMap(t => t.split('|'));
+            let tokens = val.match(/"[^"]+"|\S+/g) || [];
+
+            let terms = tokens
+                .filter(t => !t.startsWith('!'))
+                .flatMap(t => {
+                    if (t.includes('|')) return t.split('|');
+                    if (t.startsWith('"')) return [t.slice(1, -1)];
+                    return [t];
+                });
 
             $('#demo tbody tr').each(function () {
                 $(this).find('td').eq(colIndex).mark(terms, {
                     separateWordSearch: false,
-                    exclude: ['.info-text']   // ← Popup ausschließen
+                    exclude: ['.info-text'] 
                 });
             });
 
