@@ -154,15 +154,8 @@ $(function () {
 
     $('#demo thead tr:eq(1) th').each(function (i) {
         let title = $(this).text();
-
-        let input = $('<input type="text" style="width:100%;" spellcheck="false" autocomplete="off"/>');
-
-        // 👉 Hier kommt deine Zeile rein
-        input.attr("placeholder", title + " Enter drücken");
-
-        $(this).html(input);
+        $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;" spellcheck="false" autocomplete="off"/>');
     });
-
 
     // Spaltenfilter (UND / ODER / NOT)
     $('#demo thead tr:eq(1) input').on('keydown', function (e) {
