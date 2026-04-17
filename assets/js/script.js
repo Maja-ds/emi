@@ -16,9 +16,12 @@ const filterState = {
     }
 };
 
+let silentUIUpdate = false;
 $(function () {
 
+
     loadFilterState();
+    console.log("STATE beim Start:", filterState);
     function showLoading() {
         $('#loadingOverlay').addClass('show').show();
     }
@@ -35,6 +38,17 @@ $(function () {
         if (!value) return [];
         return value.split(',').map(v => v.trim());
     }
+    function normalizeValue(val) {
+        return String(val || "")
+            .toLowerCase()
+            .trim();
+    }
+    const yearKeyMap = {
+        Geburtsjahr: "geburtsjahr",
+        Sterbejahr: "sterbejahr",
+        Ausreisejahr: "ausreisejahr"
+    };
+
     const religionMapping = {
         "Jüdisch": ["jüdisch"],
         "Christlich": ["christlich"],
@@ -140,39 +154,45 @@ $(function () {
 
     $('#demo thead tr:eq(1) th').each(function (i) {
         let title = $(this).text();
-        $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;" spellcheck="false" autocomplete="off"/>');
+
+        let input = $('<input type="text" style="width:100%;" spellcheck="false" autocomplete="off"/>');
+
+        // 👉 Hier kommt deine Zeile rein
+        input.attr("placeholder", title + " Enter drücken");
+
+        $(this).html(input);
     });
 
 
-  $('#demo thead tr:eq(1) input').on('keydown', function (e) {
+    // Spaltenfilter (UND / ODER / NOT)
+    $('#demo thead tr:eq(1) input').on('keydown', function (e) {
 
-      if (e.key !== "Enter") return;
+        if (e.key !== "Enter") return;
 
-      let colIndex = $(this).closest('th').index();
-      let val = $(this).val().trim();
+        let colIndex = $(this).closest('th').index();
+        let val = $(this).val().trim();
 
-      let regex = buildSearchRegex(val);
+        let regex = buildSearchRegex(val);
 
-      table
-          .column(colIndex)
-          .search(regex, true, false)
-          .draw();
-  });
-    
-  $('#demo thead tr:eq(1) input').on('input', function () {
+        table
+            .column(colIndex)
+            .search(regex, true, false)
+            .draw();
+    });
+    $('#demo thead tr:eq(1) input').on('input', function () {
 
-      let val = $(this).val().trim();
+        let val = $(this).val().trim();
 
-      // Nur reagieren wenn wirklich leer
-      if (val !== '') return;
+        // Nur reagieren wenn wirklich leer
+        if (val !== '') return;
 
-      let colIndex = $(this).closest('th').index();
+        let colIndex = $(this).closest('th').index();
 
-      table
-          .column(colIndex)
-          .search('', true, false)
-          .draw();
-  });
+        table
+            .column(colIndex)
+            .search('', true, false)
+            .draw();
+    });
 
     // Highlighting
     table.on('draw', function () {
@@ -209,6 +229,7 @@ $(function () {
         }, 0);
     });
 
+
     // Update Row Count
     function updateRowCount() {
         let count = table.rows({ search: 'applied' }).count();
@@ -243,7 +264,7 @@ $(function () {
 
     // Fachbereichdropdown
     function createDisziplinDropdown(bereich, selectedValues = []) {
-        
+
         if (!bereich) bereich = "Alle";
 
         const container = $('#disziplinDropdown');
@@ -253,8 +274,6 @@ $(function () {
 
         const box = $('<div class="filter-box"></div>');
 
-        // STATE-DEFINITION:
-        // [] = ALLE aktiv
         const isAllActive = selectedValues.length === 0;
 
         // ALL checkbox (nur UI)
@@ -301,6 +320,7 @@ $(function () {
             .prop('checked', isAllActive);
     }
 
+
     //Ausreiselanddropdown
     function createLandDropdown() {
         let container = $('#landDropdown'); // Container div im HTML
@@ -308,17 +328,9 @@ $(function () {
         container.append('<button type="button" class="filter-btn">Ausreiseland wählen</button>');
 
         let box = $('<div class="filter-box"></div>');
-        const isAllActive = filterState.land.length === 0;
+
         // "Alle" Checkbox immer zuerst
-        box.append(`
-        <label>
-            <input type="checkbox"
-                   class="landCheckbox"
-                   value="all"
-                   ${isAllActive ? "checked" : ""}>
-            Alle
-        </label><br>
-    `);
+        box.append(`<label><input type="checkbox" class="landCheckbox" value="all" checked> Alle</label><br>`);
 
         // Alle Länder extrahieren
         let laender = [...new Set(
@@ -328,20 +340,7 @@ $(function () {
         )].sort();
 
         // Checkboxen für Länder hinzufügen
-        laender.forEach(l => {
-
-            const checked = filterState.land.includes(l);
-
-            box.append(`
-            <label>
-                <input type="checkbox"
-                       class="landCheckbox"
-                       value="${l}"
-                       ${checked ? "checked" : ""}>
-                ${l}
-            </label><br>
-        `);
-        });
+        laender.forEach(l => box.append(`<label><input type="checkbox" class="landCheckbox" value="${l}"> ${l}</label><br>`));
 
         container.append(box);
     }
@@ -349,37 +348,15 @@ $(function () {
         let container = $('#landDropdown');
         let box = container.find('.filter-box');
         box.empty();
-        const isAllActive = filterState.land.length === 0;
+        box.append(`<label><input type="checkbox" class="landCheckbox" value="all" checked> Alle</label><br>`);
 
-        box.append(`
-    <label>
-        <input type="checkbox"
-               class="landCheckbox"
-               value="all"
-               ${isAllActive ? "checked" : ""}>
-        Alle
-    </label><br>
-`);
         let laender = [...new Set(
             dataArray
                 .map(d => d.Ausreiseland) // neue Spalte
                 .filter(v => v && v.toLowerCase() !== "k.a.")
         )].sort();
 
-        laender.forEach(l => {
-
-            const checked = filterState.land.includes(l);
-
-            box.append(`
-            <label>
-                <input type="checkbox"
-                       class="landCheckbox"
-                       value="${l}"
-                       ${checked ? "checked" : ""}>
-                ${l}
-            </label><br>
-        `);
-        });
+        laender.forEach(l => box.append(`<label><input type="checkbox" class="landCheckbox" value="${l}"> ${l}</label><br>`));
     }
     createLandDropdown();
     updateLandOptions(daten);
@@ -453,51 +430,68 @@ $(function () {
     createEmigrationslandDropdown();
     updateEmigrationslandDropdown(daten);
 
- 
+    function syncUIFromState() {
+        renderFiltersFromState();
 
-       function restoreUIFromState() {
-
-            // MODE
-            $('input[name="mode"]').each(function () {
-                this.checked = ($(this).val() === filterState.mode);
-            });
-
-            // BEREICH
-            $('#bereichFilter input').each(function () {
-                this.checked = ($(this).val() === filterState.bereich);
-            });
-           let dataForDropdown;
-            if (filterState.mode === "alle") {
-
-                $('#berufsgruppeDropdown').show();
-                $('#bereichFilter').hide();
-
-                $('#disziplinDropdown').hide().empty();
-                dataForDropdown = daten;
-
-            } else {
-
-                $('#berufsgruppeDropdown').hide();
-                $('#bereichFilter').show();
-
-                $('#disziplinDropdown').show().empty();
-
-                createDisziplinDropdown(
-                    filterState.bereich || "Alle",
-                    filterState.disziplinen
-                );
-                dataForDropdown = daten.filter(d =>
-                    d.Bereich && d.Bereich.trim() !== ""
-                );
-           }
-           updateLandOptions(dataForDropdown);
-           updateEmigrationslandDropdown(dataForDropdown);
-           renderFiltersFromState();
-           applyFilter();
+        // Wichtig: erst NACHDEM UI gesetzt ist
+        requestAnimationFrame(() => {
+            applyFilter();
+            saveFilterState();
+        });
     }
 
-   
-        
+
+    function restoreUIFromState() {
+        silentUIUpdate = true;
+        // MODE
+        $('input[name="mode"]').each(function () {
+            this.checked = ($(this).val() === filterState.mode);
+        });
+
+        // BEREICH
+        $('#bereichFilter input').each(function () {
+            this.checked = ($(this).val() === filterState.bereich);
+        });
+        let dataForDropdown;
+        if (filterState.mode === "alle") {
+
+            $('#berufsgruppeDropdown').show();
+            $('#bereichFilter').hide();
+
+            $('#disziplinDropdown').hide().empty();
+            dataForDropdown = daten;
+
+        } else {
+
+            $('#berufsgruppeDropdown').hide();
+            $('#bereichFilter').show();
+
+            $('#disziplinDropdown').show().empty();
+
+            createDisziplinDropdown(
+                filterState.bereich || "Alle",
+                filterState.disziplinen
+            );
+            dataForDropdown = daten.filter(d =>
+                d.Bereich && d.Bereich.trim() !== ""
+            );
+        }
+        $('.yearFilter').each(function () {
+            const rawColumn = $(this).data('column');
+            const key = yearKeyMap[rawColumn];
+
+            if (key && filterState.jahr[key]) {
+                $(this).val(filterState.jahr[key]);
+            }
+        });
+        updateLandOptions(dataForDropdown);
+        updateEmigrationslandDropdown(dataForDropdown);
+        silentUIUpdate = false;
+        syncUIFromState();
+    }
+
+
+
 
     // Dropdown öffnen/schließen
     $(document).on('click', '.filter-btn', function (e) {
@@ -515,45 +509,26 @@ $(function () {
 
     /* JAHRESFILTER */
     function parseYearInput(value) {
-        if (!value) return [];
+        if (!value) return null;
 
-        value = value.trim();
         const filters = [];
-        const parts = value.split(',').map(s => s.trim());
 
-        for (let part of parts) {
-            const subParts = part.split(/\s+/).filter(Boolean);
+        // Split nach Komma ODER Leerzeichen
+        const tokens = value.split(/[,\s]+/).filter(Boolean);
 
-            for (let sp of subParts) {
-                const match = sp.match(/^(<=|>=|<|>)?\s*(\d*)$/);
-                const op = match ? (match[1] || "=") : "=";
-                const num = match ? match[2] : "";
+        for (let token of tokens) {
 
-                // Buchstaben enthalten → sofort 0 Treffer
-                if (/[a-zA-Z]/.test(sp)) {
-                    return [{ op: "=", year: 0 }];
-                }
+            const match = token.match(/^(<=|>=|<|>)?\s*(\d{4})$/);
 
-                // Operator allein, ohne Zahl → warten
-                if (num.length === 0) continue;
+            if (!match) continue;
 
-                // Weniger als 4 Ziffern → warten
-                if (/^\d{1,3}$/.test(num)) continue;
+            const op = match[1] || "=";
+            const year = parseInt(match[2], 10);
 
-                // Genau 4 Ziffern → gültig
-                if (/^\d{4}$/.test(num)) {
-                    filters.push({ op, year: parseInt(num, 10) });
-                    continue;
-                }
-
-                // Mehr als 4 Ziffern → 0 Treffer
-                if (/^\d{5,}$/.test(num)) {
-                    return [{ op: "=", year: 0 }];
-                }
-            }
+            filters.push({ op, year });
         }
 
-        return filters.length > 0 ? filters : null; // null = warten
+        return filters.length > 0 ? filters : null;
     }
     function updateFilterStatus() {
 
@@ -586,7 +561,7 @@ $(function () {
     }
 
     function renderFiltersFromState() {
-
+        silentUIUpdate = true;
         // Berufsgruppe
         $('.berufsCheckbox').each(function () {
 
@@ -647,145 +622,188 @@ $(function () {
                 this.checked = filterState.emigLand.includes(val);
             }
         });
+        silentUIUpdate = false;
+    }
+    function getYearFiltersFromState() {
+        const filters = [];
+
+        for (let key in filterState.jahr) {
+            const value = filterState.jahr[key];
+
+            if (!value) continue;
+
+            filters.push({
+                column: key,   // z.B. "geburtsjahr"
+                value: value
+            });
+        }
+
+        return filters;
     }
 
+    function checkYear(row, yearFilters) {
+
+        for (let f of yearFilters) {
+
+            if (!f.value) continue;
+
+            const filters = parseYearInput(f.value);
+
+            // kein gültiger Filter → überspringen
+            if (!filters) continue;
+            const rawValue = row[
+                Object.keys(yearKeyMap)
+                    .find(k => yearKeyMap[k] === f.column)
+            ];
+            const rowValue = parseInt(rawValue, 10);
+
+            if (isNaN(rowValue)) return false;
+
+            // "=" (OR)
+            const exact = filters.filter(x => x.op === "=");
+            if (
+                exact.length > 0 &&
+                !exact.some(x => rowValue === x.year)
+            ) {
+                return false;
+            }
+
+            // Bereich (AND)
+            for (let r of filters.filter(x => x.op !== "=")) {
+                if (r.op === ">" && !(rowValue > r.year)) return false;
+                if (r.op === "<" && !(rowValue < r.year)) return false;
+                if (r.op === ">=" && !(rowValue >= r.year)) return false;
+                if (r.op === "<=" && !(rowValue <= r.year)) return false;
+            }
+        }
+
+        return true;
+    }
+
+    function getYearInputStatus(value) {
+        if (!value) return "empty";
+
+        const tokens = value.split(/[,\s]+/).filter(Boolean);
+
+        let hasValid = false;
+
+        for (let token of tokens) {
+
+            // gültig: z. B. <1933, 1933
+            if (/^(<=|>=|<|>)?\d{4}$/.test(token)) {
+                hasValid = true;
+                continue;
+            }
+
+            // unvollständig: z. B. <, 19, >19
+            if (/^(<=|>=|<|>)?\d{0,3}$/.test(token)) {
+                return "partial";
+            }
+
+            // alles andere = ungültig
+            return "invalid";
+        }
+
+        return hasValid ? "valid" : "partial";
+    }
+
+    function rowPassesFilter(row) {
+
+        const mode = filterState.mode;
+
+        // BERUF / BEREICH
+        if (mode === "alle") {
+
+            if (
+                filterState.berufsgruppen.length > 0 &&
+                !filterState.berufsgruppen.some(v =>
+                    splitValues(row.Berufsgruppe).includes(v)
+                )
+            ) return false;
+
+        } else {
+
+            // Nur Kern-Daten zulassen
+            if (
+                row.Bereich !== "Geisteswissenschaften" &&
+                row.Bereich !== "Exakte Wissenschaften"
+            ) return false;
+
+            // Bereich-Filter anwenden
+            if (
+                filterState.bereich !== "Alle" &&
+                row.Bereich !== filterState.bereich
+            ) return false;
+
+            // Disziplinen
+            if (
+                filterState.disziplinen.length > 0 &&
+                !filterState.disziplinen.some(v =>
+                    splitValues(row.Fachbereich).includes(v)
+                )
+            ) return false;
+        }
+        const effectiveReligion =
+            filterState.religion.includes("all") ? [] : filterState.religion;
+
+        if (effectiveReligion.length > 0) {
+
+            const relText = (row.Konfession_Gruppe || "").toLowerCase();
+
+            const matches = effectiveReligion.some(cat =>
+                (religionMapping[cat] || []).some(term =>
+                    relText.includes(term)
+                )
+            );
+
+            if (!matches) return false;
+        }
+
+        // LAND
+        if (filterState.land.length > 0) {
+            const land = normalizeValue(row.Ausreiseland);
+            if (!filterState.land.map(normalizeValue).includes(land)) return false;
+        }
+
+        // EMIG LAND
+        if (filterState.emigLand.length > 0) {
+            const rowLaender = (row.Emigrationsland || "")
+                .split(',')
+                .map(normalizeValue);
+
+            const match = filterState.emigLand
+                .map(normalizeValue)
+                .some(l => rowLaender.includes(l));
+
+            if (!match) return false;
+        }
+
+        return true;
+    }
     // Filterfunktion
     function applyFilter() {
- 
-        let mode = filterState.mode;
-        let berufsSelected = filterState.berufsgruppen;
-        let bereich = filterState.bereich;
-        let disziSelected = [...filterState.disziplinen];
-        let landSelected = [...filterState.land];
-        let emigLandSelected = [...filterState.emigLand];
-        let religionSelected = [...filterState.religion];
-
-
+        const yearFilters = getYearFiltersFromState();
         $.fn.dataTable.ext.search.length = 0;
-        $.fn.dataTable.ext.search.push(function (settings, data, index) {
-            let row = table.row(index).data();
 
-            // --- Jahresfilter für alle yearFilter-Felder ---
-            let yearPass = true;
-
-            $('.yearFilter').each(function () {
-                const inputVal = $(this).val().trim();
-                const columnName = $(this).data('column');
-                const rowValue = parseInt(row[columnName]);
-
-                if (!inputVal) return;
-
-                const filters = parseYearInput(inputVal);
-
-                if (filters === null) return;
-                if (filters.length === 0) return false;
-
-                // fehlende Werte immer ausschließen
-                if (isNaN(rowValue)) {
-                    yearPass = false;
-                    return false;
-                }
-
-                // exakte Werte (OR)
-                const exact = filters.filter(f => f.op === "=");
-
-                if (exact.length > 0) {
-                    const match = exact.some(f => rowValue === f.year);
-                    if (!match) {
-                        yearPass = false;
-                        return false;
-                    }
-                }
-
-                // Bereichsfilter (AND)
-                const range = filters.filter(f => f.op !== "=");
-
-                for (let f of range) {
-                    const { op, year } = f;
-
-                    if (op === ">" && !(rowValue > year)) {
-                        yearPass = false;
-                        return false;
-                    }
-
-                    if (op === "<" && !(rowValue < year)) {
-                        yearPass = false;
-                        return false;
-                    }
-                }
-            });
-
-            if (!yearPass) return false;
-            // --- Berufsgruppe / Bereich / Disziplin ---
-            if (mode === "alle") {
-
-                if (
-                    berufsSelected.length > 0 &&
-                    !berufsSelected.some(v => splitValues(row.Berufsgruppe).includes(v))
-                ) return false;
-
-            } else {
-
-                if (
-                    row.Bereich !== "Geisteswissenschaften" &&
-                    row.Bereich !== "Exakte Wissenschaften"
-                ) return false;
-
-                let bereich = filterState.bereich;
-
-                if (bereich !== "Alle" && row.Bereich !== bereich) return false;
-
-                if (
-                    disziSelected.length > 0 &&
-                    !disziSelected.some(v => splitValues(row.Fachbereich).includes(v))
-                ) return false;
-            }
-
-            let religionSelected = [...filterState.religion];
-            // "All" bedeutet: keine Einschränkung
-            if (religionSelected.includes("all")) religionSelected = [];
-
-            if (religionSelected.length > 0) {
-                const relText = (row.Konfession_Gruppe || "").toLowerCase();
-                const matches = religionSelected.some(cat =>
-                    religionMapping[cat].some(term => relText.includes(term))
-                );
-                if (!matches) return false;
-            }
-            if (landSelected.length > 0) {
-                const land = row.Ausreiseland; // neue Spalte
-                if (!land || land.toLowerCase() === "k.a.") return false; // optional k.A. ausschließen
-                if (!landSelected.includes(land)) return false;
-            }
-            if (emigLandSelected.length > 0) {
-
-                if (!row.Emigrationsland) return false;
-
-                // Werte aus der Tabelle (auch Komma-getrennt)
-                let rowLaender = row.Emigrationsland
-                    .split(',')
-                    .map(v => v.trim());
-
-                // Prüfen, ob mindestens ein Land passt
-                let match = emigLandSelected.some(l => rowLaender.includes(l));
-
-                if (!match) return false;
-            }
-
-            return true;
+        $.fn.dataTable.ext.search.push(function (_, __, index) {
+            const row = table.row(index).data();
+            if (!checkYear(row, yearFilters)) return false;
+            return rowPassesFilter(row);
         });
 
         table.draw();
 
-        $('#rowCount').text(table.rows({ filter: 'applied' }).count());
+        $('#rowCount').text(table.rows({ search: 'applied' }).count());
         updateFilterStatus();
         saveFilterState();
     }
 
+    
+
 
     // Events
     $(document).on('change', '.berufsCheckbox', function () {
-
+        if (silentUIUpdate) return;
         const value = $(this).val();
         const isChecked = this.checked;
 
@@ -816,7 +834,7 @@ $(function () {
     });
 
     $(document).on('change', '#bereichFilter input', function () {
-
+        if (silentUIUpdate) return;
         const bereich = $('#bereichFilter input:checked').val() || "Alle";
         filterState.bereich = bereich;
         filterState.disziplinen = [];
@@ -828,7 +846,7 @@ $(function () {
     });
 
     $(document).on('change', '.disziCheckbox', function () {
-
+        if (silentUIUpdate) return;
         const value = $(this).val();
         const isAll = value === "all";
 
@@ -877,7 +895,7 @@ $(function () {
     });
 
     $(document).on('change', 'input[name="religionFilter"]', function () {
-
+        if (silentUIUpdate) return;
         const value = $(this).val();
         const isAll = value === "all";
 
@@ -895,8 +913,9 @@ $(function () {
 
             if (this.checked) {
 
-                filterState.religion.push(value);
-                filterState.religion = [...new Set(filterState.religion)];
+                if (!filterState.religion.includes(value)) {
+                    filterState.religion.push(value);
+                }
 
                 $('input[name="religionFilter"][value="all"]')
                     .prop('checked', false);
@@ -918,7 +937,7 @@ $(function () {
     });
 
     $(document).on('change', '.landCheckbox', function () {
-
+        if (silentUIUpdate) return;
         const value = $(this).val();
         const isAll = value === "all";
 
@@ -960,7 +979,7 @@ $(function () {
     });
 
     $(document).on('change', '.emigLandCheckbox', function () {
-
+        if (silentUIUpdate) return;
         const value = $(this).val();
         const isAll = value === "all";
 
@@ -1008,18 +1027,36 @@ $(function () {
 
     let yearFilterTimeout;
     $('.yearFilter').on('keyup', function () {
-
-        const column = $(this).data('column');
+        if (silentUIUpdate) return;
         const value = $(this).val();
+        const rawColumn = $(this).data('column');
+        const column = yearKeyMap[rawColumn];
+
+        if (!column) return;
 
         filterState.jahr[column] = value;
 
+        // 👉 Status bestimmen
+        const status = getYearInputStatus(value);
+
+        // 👉 Klassen zurücksetzen
+        $(this)
+            .removeClass('year-valid year-invalid year-partial');
+
+        // 👉 neue Klasse setzen
+        if (status === "valid") {
+            $(this).addClass('year-valid');
+        } else if (status === "invalid") {
+            $(this).addClass('year-invalid');
+        } else if (status === "partial") {
+            $(this).addClass('year-partial');
+        }
+
         clearTimeout(yearFilterTimeout);
         yearFilterTimeout = setTimeout(() => {
-            applyFilter();
             saveFilterState();
+            applyFilter();
         }, 200);
-
     });
 
     // Reset
@@ -1056,11 +1093,11 @@ $(function () {
         $('.emigLandCheckbox').prop('checked', false);
         $('.emigLandCheckbox[value="all"]').prop('checked', true);
 
-     
-    table.order([[0, 'asc']]).draw();
-    $('#demo thead tr:eq(1) input').val('');
-    table.columns().search('');
-    $('#demo tbody td').unmark();
+
+        table.order([[0, 'asc']]).draw();
+        $('#demo thead tr:eq(1) input').val('');
+        table.columns().search('');
+        $('#demo tbody td').unmark();
     }
 
     $('#resetFilters').on('click', function () {
@@ -1090,7 +1127,7 @@ $(function () {
             // 1. STATE setzen
             filterState.mode = mode;
             resetAllFilters();
-           
+
             // 4. Dynamische UI neu bauen
             if (mode === "alle") {
 
