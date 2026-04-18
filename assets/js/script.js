@@ -1170,6 +1170,11 @@ $(function () {
     $(document).on('click', function () {
         $('.tooltip-name').removeClass('active');
     });
+        document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) {
+            $('.yearFilter').val('');
+        }
+    });
 
     restoreUIFromState();
 });
