@@ -1036,9 +1036,9 @@ $(function () {
         $(this)
             .removeClass('year-invalid');
 
-           if (status === "invalid") {
-        $(this).addClass('year-invalid');
-       }
+      if (status === "invalid" && value.trim() !== "") {
+      $(this).addClass('year-invalid');
+                 }
   
 
         clearTimeout(yearFilterTimeout);
