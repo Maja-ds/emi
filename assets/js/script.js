@@ -1170,6 +1170,23 @@ $(function () {
     $(document).on('click', function () {
         $('.tooltip-name').removeClass('active');
     });
+    document.addEventListener("visibilitychange", function () {
+    if (document.hidden) return;
+
+    $('.yearFilter').each(function () {
+
+        const rawColumn = $(this).data('column');
+        const key = yearKeyMap[rawColumn];
+
+        const stateValue = filterState.jahr[key] || "";
+        const uiValue = $(this).val();
+
+        // 🔥 nur korrigieren wenn inkonsistent
+        if (uiValue !== stateValue) {
+            $(this).val(stateValue);
+        }
+    });
+});
 
     restoreUIFromState();
 });
