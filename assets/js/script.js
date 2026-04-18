@@ -1171,9 +1171,18 @@ $(function () {
         $('.tooltip-name').removeClass('active');
     });
 
+function isMobile() {
+    return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+}
+
 document.addEventListener("visibilitychange", function () {
-    if (document.hidden) return;
-    applyFilter();   
+
+    if (!isMobile()) return;
+
+    if (!document.hidden) {
+        // zurück zur Seite → Overlay zeigen
+        document.getElementById("reloadOverlay").style.display = "block";
+    }
 });
 
     restoreUIFromState();
