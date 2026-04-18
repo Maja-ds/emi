@@ -738,8 +738,8 @@ a[x-apple-data-detectors] {
          }
     
     .text-container {
-        width: 95%,
-        padding: 0 40px;
+        width: 90%,
+        padding: 0 0;
     }
 
     .filter-group > *,
