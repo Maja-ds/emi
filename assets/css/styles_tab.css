@@ -672,6 +672,27 @@ table.dataTable thead .sorting_desc:after {
     color: #6495ED;
     opacity: 1 !important;
 }
+#reloadOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 9999;
+}
+
+.reload-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
 
 /* Media-Queries */
 @media (max-width: 1200px) {
