@@ -673,12 +673,13 @@ table.dataTable thead .sorting_desc:after {
     opacity: 1 !important;
 }
 /* Deaktiviert automatische Link-Stylings von Apple (iOS / Mail / Safari) */
-a[x-apple-data-detectors] {
+td {
+    -webkit-touch-callout: none;
+}
+
+a {
     color: inherit !important;
     text-decoration: none !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    font-weight: inherit !important;
 }
 /* Media-Queries */
 @media (max-width: 1200px) {
