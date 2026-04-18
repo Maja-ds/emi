@@ -1170,8 +1170,6 @@ $(function () {
     $(document).on('click', function () {
         $('.tooltip-name').removeClass('active');
     });
-    document.addEventListener("visibilitychange", function () {
-    if (document.hidden) return;
 
 document.addEventListener("visibilitychange", function () {
     if (document.hidden) return;
