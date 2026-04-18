@@ -1173,19 +1173,10 @@ $(function () {
     document.addEventListener("visibilitychange", function () {
     if (document.hidden) return;
 
-    $('.yearFilter').each(function () {
+document.addEventListener("visibilitychange", function () {
+    if (document.hidden) return;
 
-        const rawColumn = $(this).data('column');
-        const key = yearKeyMap[rawColumn];
-
-        const stateValue = filterState.jahr[key] || "";
-        const uiValue = $(this).val();
-
-        // 🔥 nur korrigieren wenn inkonsistent
-        if (uiValue !== stateValue) {
-            $(this).val(stateValue);
-        }
-    });
+    syncUIFromState(); // macht render + applyFilter sauber
 });
 
     restoreUIFromState();
