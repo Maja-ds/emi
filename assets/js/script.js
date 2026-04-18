@@ -776,9 +776,9 @@ $(function () {
     // Filterfunktion
     function applyFilter() {
         const yearFilters = getYearFiltersFromState();
-        $.fn.dataTable.ext.search.length = 0;
+        $.fn.dataTable.ext.search = [];
 
-        $.fn.dataTable.ext.search.push(function (_, __, index) {
+        $.fn.dataTable.ext.search.push(function (settings, data, index) {
             const row = table.row(index).data();
             if (!checkYear(row, yearFilters)) return false;
             return rowPassesFilter(row);
