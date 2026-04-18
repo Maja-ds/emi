@@ -8,7 +8,7 @@ body {
 
 h1 {
     font-weight: 500;
-    color: red;
+    color: #F88379;
 }
 
 nav .container-fluid {
@@ -732,10 +732,14 @@ a[x-apple-data-detectors] {
 @media (max-width: 768px) {
 
 
-    .table-container,
-    .text-container {
+    .table-container {
         width: 95%;
         padding: 0 20px;
+         }
+    
+    .text-container {
+        width: 95%,
+        padding: 0 40px;
     }
 
     .filter-group > *,
