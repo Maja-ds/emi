@@ -177,7 +177,7 @@ html {
     flex: 1;
     margin-right: 8%;
     margin-left: 5%;
-    margin-bottom: 80%;
+    margin-bottom: 60%;
 }
 
 /*Bilder*/
@@ -284,7 +284,9 @@ img.fullwidth {
         flex-direction: column;
     }
         .content {
-        margin-bottom: 120%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 60%;
     }
 
     #toc {
