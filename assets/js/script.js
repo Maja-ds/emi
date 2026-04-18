@@ -1171,17 +1171,19 @@ $(function () {
         $('.tooltip-name').removeClass('active');
     });
 
-function isMobile() {
-    return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-}
+window.addEventListener("pageshow", function (event) {
 
-document.addEventListener("visibilitychange", function () {
+    if (event.persisted) {
 
-    if (!isMobile()) return;
+        // 👉 nur Jahresfelder leeren
+        $('.yearFilter').val('');
 
-    if (!document.hidden) {
-        // zurück zur Seite → Overlay zeigen
-        document.getElementById("reloadOverlay").style.display = "block";
+        // 👉 State auch zurücksetzen
+        filterState.jahr = {
+            geburtsjahr: "",
+            sterbejahr: "",
+            ausreisejahr: ""
+        };
     }
 });
 
