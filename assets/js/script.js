@@ -1173,7 +1173,7 @@ $(function () {
 
 document.addEventListener("visibilitychange", function () {
     if (document.hidden) return;
-    restoreUIFromState();     
+    applyFilter();   
 });
 
     restoreUIFromState();
