@@ -1029,21 +1029,17 @@ $(function () {
 
         filterState.jahr[column] = value;
 
-        // 👉 Status bestimmen
+        //  Status bestimmen
         const status = getYearInputStatus(value);
 
-        // 👉 Klassen zurücksetzen
+        // Klassen zurücksetzen
         $(this)
-            .removeClass('year-valid year-invalid year-partial');
+            .removeClass('year-invalid');
 
-        // 👉 neue Klasse setzen
-        if (status === "valid") {
-            $(this).addClass('year-valid');
-        } else if (status === "invalid") {
-            $(this).addClass('year-invalid');
-        } else if (status === "partial") {
-            $(this).addClass('year-partial');
-        }
+           if (status === "invalid") {
+        $(this).addClass('year-invalid');
+       }
+  
 
         clearTimeout(yearFilterTimeout);
         yearFilterTimeout = setTimeout(() => {
