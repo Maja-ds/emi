@@ -1174,7 +1174,7 @@ $(function () {
 document.addEventListener("visibilitychange", function () {
     if (document.hidden) return;
 
-    syncUIFromState(); // macht render + applyFilter sauber
+      resetAllFilters();
 });
 
     restoreUIFromState();
