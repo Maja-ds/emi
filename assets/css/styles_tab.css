@@ -8,7 +8,7 @@ body {
 
 h1 {
     font-weight: 500;
-    color: red;
+    color: #800020;
 }
 
 nav .container-fluid {
@@ -752,9 +752,9 @@ table.dataTable thead .sorting_desc:after {
          }
     
     .text-container {
-        width: 95%;
+        width: 90%;
         padding: 0 0;
-        margin-right: 15%;
+        margin-right: 7%;
         margin-left: 3%;
     }
         p {
