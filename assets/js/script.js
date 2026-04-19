@@ -469,14 +469,12 @@ $(function () {
                 d.Bereich && d.Bereich.trim() !== ""
             );
         }
-        $('.yearFilter').each(function () {
-            const rawColumn = $(this).data('column');
-            const key = yearKeyMap[rawColumn];
+      $('.yearFilter').each(function () {
+             const rawColumn = $(this).data('column');
+             const key = yearKeyMap[rawColumn];
 
-            if (key && filterState.jahr[key]) {
-                $(this).val(filterState.jahr[key]);
-            }
-        });
+         $(this).val(filterState.jahr[key] || "");
+      });
         updateLandOptions(dataForDropdown);
         updateEmigrationslandDropdown(dataForDropdown);
         silentUIUpdate = false;
