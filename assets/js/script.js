@@ -526,7 +526,7 @@ $(function () {
         let active = [];
 
         if (filterState.berufsgruppen.length > 0) {
-            active.push("Beruf: " + filterState.berufsgruppen.join(", "));
+            active.push("Berufsgruppe: " + filterState.berufsgruppen.join(", "));
         }
 
         if (filterState.bereich && filterState.bereich !== "Alle") {
