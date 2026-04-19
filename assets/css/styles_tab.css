@@ -8,7 +8,7 @@ body {
 
 h1 {
     font-weight: 500;
-    color: #7F00FF;
+    color: red;
 }
 
 nav .container-fluid {
@@ -754,12 +754,15 @@ table.dataTable thead .sorting_desc:after {
     .text-container {
         width: 95%;
         padding: 0 0;
-        margin-right: 8%;
-        margin-left: 5%;
+        margin-right: 15%;
+        margin-left: 2%;
     }
         p {
         text-align: left;
         padding: 0 0;
+    }
+    #filter-panel {
+        width: 95%;
     }
 
     .filter-group > *,
