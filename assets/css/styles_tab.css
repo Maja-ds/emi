@@ -426,11 +426,11 @@ div.dataTables_length select {
 
 
     .filter-box::-webkit-scrollbar {
-        width: 8px;
+        width: 7px;
     }
 
     .filter-box::-webkit-scrollbar-thumb {
-        background: #C0C0C0;
+        background: #A9A9A9;
         border-radius: 4px;
     }
 
