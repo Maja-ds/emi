@@ -754,6 +754,8 @@ table.dataTable thead .sorting_desc:after {
     .text-container {
         width: 100%;
         padding: 0 0;
+        margin-right: 8%;
+        margin-left: 5%;
     }
         p {
         text-align: left;
