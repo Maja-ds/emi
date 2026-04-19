@@ -288,6 +288,9 @@ img.fullwidth {
         margin-right: 5%;
         margin-bottom: 60%;
     }
+       p {
+       text-align: left;
+   }
 
     #toc {
         width: 100%;
