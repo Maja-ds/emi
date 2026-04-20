@@ -1169,22 +1169,6 @@ $(function () {
         $('.tooltip-name').removeClass('active');
     });
 
-window.addEventListener("pageshow", function (event) {
-
-    if (event.persisted) {
-
-        // 👉 nur Jahresfelder leeren
-        $('.yearFilter').val('');
-
-        // 👉 State auch zurücksetzen
-        filterState.jahr = {
-            geburtsjahr: "",
-            sterbejahr: "",
-            ausreisejahr: ""
-        };
-    }
-});
-
     restoreUIFromState();
 });
 
